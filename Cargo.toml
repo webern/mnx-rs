@@ -6,6 +6,8 @@ include = ["/src", "LICENSE", "README"]
 authors = ["Matthew James Briggs <matthew.james.briggs@gmail.com>"]
 description = "A Rust representation of the MNX music notation specification"
 license = "MIT"
+repository = "https://github.com/webern/mnx-rs"
+documentation = "https://docs.rs/mnx-rs/latest/mnx_rs/"
 
 [dependencies]
 regress = "0.10"
