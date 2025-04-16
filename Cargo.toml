@@ -1,12 +1,11 @@
 [package]
-name = "mnx"
+name = "mnx-rs"
 version = "0.0.0"
 edition = "2021"
 include = ["/src", "LICENSE", "README"]
 authors = ["Matthew James Briggs <matthew.james.briggs@gmail.com>"]
 description = "A Rust representation of the MNX music notation specification"
 license = "MIT"
-license-file = "LICENSE"
 
 [dependencies]
 regress = "0.10"
