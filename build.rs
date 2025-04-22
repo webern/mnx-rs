@@ -1,5 +1,6 @@
 use std::fs;
 use std::path::PathBuf;
+use std::process::Command;
 use typify::{TypeSpace, TypeSpaceSettings};
 
 const MNX_SCHEMA_PATH: &str = "./docs/mnx-schema.json";
@@ -18,6 +19,7 @@ fn main() {
     let out_file = canonicalize(OUT_PATH);
     let _ = fs::remove_file(OUT_PATH);
     fs::write(out_file, contents).unwrap();
+    fmt();
 }
 
 fn canonicalize(s: &str) -> PathBuf {
@@ -29,5 +31,18 @@ fn canonicalize(s: &str) -> PathBuf {
         ))
     } else {
         raw
+    }
+}
+
+fn fmt() {
+    let cargo_path = env!("CARGO");
+    let output = Command::new(cargo_path)
+        .current_dir(env!("CARGO_MANIFEST_DIR"))
+        .arg("fmt")
+        .output()
+        .expect("Unable to run fmt");
+    if !output.status.success() {
+        eprintln!("{:?}", output);
+        panic!("fmt failed");
     }
 }
