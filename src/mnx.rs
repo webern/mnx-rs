@@ -4,18 +4,12 @@ pub mod error {
     pub struct ConversionError(::std::borrow::Cow<'static, str>);
     impl ::std::error::Error for ConversionError {}
     impl ::std::fmt::Display for ConversionError {
-        fn fmt(
-            &self,
-            f: &mut ::std::fmt::Formatter<'_>,
-        ) -> Result<(), ::std::fmt::Error> {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> Result<(), ::std::fmt::Error> {
             ::std::fmt::Display::fmt(&self.0, f)
         }
     }
     impl ::std::fmt::Debug for ConversionError {
-        fn fmt(
-            &self,
-            f: &mut ::std::fmt::Formatter<'_>,
-        ) -> Result<(), ::std::fmt::Error> {
+        fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> Result<(), ::std::fmt::Error> {
             ::std::fmt::Debug::fmt(&self.0, f)
         }
     }
@@ -239,7 +233,7 @@ impl BeamListItemHooksItem {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum BeamListItemHooksItemDirection {
     #[serde(rename = "left")]
@@ -262,9 +256,7 @@ impl ::std::fmt::Display for BeamListItemHooksItemDirection {
 }
 impl ::std::str::FromStr for BeamListItemHooksItemDirection {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "left" => Ok(Self::Left),
             "right" => Ok(Self::Right),
@@ -274,9 +266,7 @@ impl ::std::str::FromStr for BeamListItemHooksItemDirection {
 }
 impl ::std::convert::TryFrom<&str> for BeamListItemHooksItemDirection {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -307,15 +297,7 @@ impl ::std::convert::TryFrom<::std::string::String> for BeamListItemHooksItemDir
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct Color(pub ::std::string::String);
@@ -759,7 +741,10 @@ impl Event {
 #[derive(::serde::Deserialize, ::serde::Serialize, Clone, Debug)]
 #[serde(deny_unknown_fields)]
 pub struct EventLyrics {
-    #[serde(default, skip_serializing_if = ":: std :: collections :: HashMap::is_empty")]
+    #[serde(
+        default,
+        skip_serializing_if = ":: std :: collections :: HashMap::is_empty"
+    )]
     pub lines: ::std::collections::HashMap<EventLyricsLinesKey, EventLyricsLinesValue>,
 }
 impl ::std::convert::From<&EventLyrics> for EventLyrics {
@@ -769,7 +754,9 @@ impl ::std::convert::From<&EventLyrics> for EventLyrics {
 }
 impl ::std::default::Default for EventLyrics {
     fn default() -> Self {
-        Self { lines: Default::default() }
+        Self {
+            lines: Default::default(),
+        }
     }
 }
 impl EventLyrics {
@@ -809,9 +796,7 @@ impl ::std::convert::From<&EventLyricsLinesKey> for EventLyricsLinesKey {
 }
 impl ::std::str::FromStr for EventLyricsLinesKey {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         if regress::Regex::new("^.*$").unwrap().find(value).is_none() {
             return Err("doesn't match pattern \"^.*$\"".into());
         }
@@ -820,9 +805,7 @@ impl ::std::str::FromStr for EventLyricsLinesKey {
 }
 impl ::std::convert::TryFrom<&str> for EventLyricsLinesKey {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -929,7 +912,7 @@ impl EventLyricsLinesValue {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum EventLyricsLinesValueType {
     #[serde(rename = "start")]
@@ -958,9 +941,7 @@ impl ::std::fmt::Display for EventLyricsLinesValueType {
 }
 impl ::std::str::FromStr for EventLyricsLinesValueType {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "start" => Ok(Self::Start),
             "middle" => Ok(Self::Middle),
@@ -972,9 +953,7 @@ impl ::std::str::FromStr for EventLyricsLinesValueType {
 }
 impl ::std::convert::TryFrom<&str> for EventLyricsLinesValueType {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -1203,7 +1182,9 @@ impl ::std::convert::From<&EventMarkingsBreath> for EventMarkingsBreath {
 }
 impl ::std::default::Default for EventMarkingsBreath {
     fn default() -> Self {
-        Self { symbol: Default::default() }
+        Self {
+            symbol: Default::default(),
+        }
     }
 }
 impl EventMarkingsBreath {
@@ -1680,8 +1661,7 @@ pub struct EventNotesItemAccidentalDisplay {
     pub force: ::std::option::Option<bool>,
     pub show: bool,
 }
-impl ::std::convert::From<&EventNotesItemAccidentalDisplay>
-for EventNotesItemAccidentalDisplay {
+impl ::std::convert::From<&EventNotesItemAccidentalDisplay> for EventNotesItemAccidentalDisplay {
     fn from(value: &EventNotesItemAccidentalDisplay) -> Self {
         value.clone()
     }
@@ -1720,7 +1700,8 @@ pub struct EventNotesItemAccidentalDisplayEnclosure {
     pub symbol: EventNotesItemAccidentalDisplayEnclosureSymbol,
 }
 impl ::std::convert::From<&EventNotesItemAccidentalDisplayEnclosure>
-for EventNotesItemAccidentalDisplayEnclosure {
+    for EventNotesItemAccidentalDisplayEnclosure
+{
     fn from(value: &EventNotesItemAccidentalDisplayEnclosure) -> Self {
         value.clone()
     }
@@ -1754,7 +1735,7 @@ impl EventNotesItemAccidentalDisplayEnclosure {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum EventNotesItemAccidentalDisplayEnclosureSymbol {
     #[serde(rename = "parentheses")]
@@ -1777,9 +1758,7 @@ impl ::std::fmt::Display for EventNotesItemAccidentalDisplayEnclosureSymbol {
 }
 impl ::std::str::FromStr for EventNotesItemAccidentalDisplayEnclosureSymbol {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "parentheses" => Ok(Self::Parentheses),
             "brackets" => Ok(Self::Brackets),
@@ -1789,14 +1768,13 @@ impl ::std::str::FromStr for EventNotesItemAccidentalDisplayEnclosureSymbol {
 }
 impl ::std::convert::TryFrom<&str> for EventNotesItemAccidentalDisplayEnclosureSymbol {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
 impl ::std::convert::TryFrom<&::std::string::String>
-for EventNotesItemAccidentalDisplayEnclosureSymbol {
+    for EventNotesItemAccidentalDisplayEnclosureSymbol
+{
     type Error = self::error::ConversionError;
     fn try_from(
         value: &::std::string::String,
@@ -1805,7 +1783,8 @@ for EventNotesItemAccidentalDisplayEnclosureSymbol {
     }
 }
 impl ::std::convert::TryFrom<::std::string::String>
-for EventNotesItemAccidentalDisplayEnclosureSymbol {
+    for EventNotesItemAccidentalDisplayEnclosureSymbol
+{
     type Error = self::error::ConversionError;
     fn try_from(
         value: ::std::string::String,
@@ -1924,7 +1903,7 @@ impl EventNotesItemPitch {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum EventNotesItemPitchStep {
     A,
@@ -1955,9 +1934,7 @@ impl ::std::fmt::Display for EventNotesItemPitchStep {
 }
 impl ::std::str::FromStr for EventNotesItemPitchStep {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "A" => Ok(Self::A),
             "B" => Ok(Self::B),
@@ -1972,9 +1949,7 @@ impl ::std::str::FromStr for EventNotesItemPitchStep {
 }
 impl ::std::convert::TryFrom<&str> for EventNotesItemPitchStep {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -2195,7 +2170,7 @@ impl EventSlursItem {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum EventSlursItemLineType {
     #[serde(rename = "dashed")]
@@ -2224,9 +2199,7 @@ impl ::std::fmt::Display for EventSlursItemLineType {
 }
 impl ::std::str::FromStr for EventSlursItemLineType {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "dashed" => Ok(Self::Dashed),
             "dotted" => Ok(Self::Dotted),
@@ -2238,9 +2211,7 @@ impl ::std::str::FromStr for EventSlursItemLineType {
 }
 impl ::std::convert::TryFrom<&str> for EventSlursItemLineType {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -2308,15 +2279,7 @@ impl ::std::convert::From<::std::vec::Vec<IntegerUnsigned>> for Fraction {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct Id(pub ::std::string::String);
@@ -3517,23 +3480,21 @@ impl ::std::ops::Deref for MnxDocumentGlobalLyricsLineMetadataKey {
         &self.0
     }
 }
-impl ::std::convert::From<MnxDocumentGlobalLyricsLineMetadataKey>
-for ::std::string::String {
+impl ::std::convert::From<MnxDocumentGlobalLyricsLineMetadataKey> for ::std::string::String {
     fn from(value: MnxDocumentGlobalLyricsLineMetadataKey) -> Self {
         value.0
     }
 }
 impl ::std::convert::From<&MnxDocumentGlobalLyricsLineMetadataKey>
-for MnxDocumentGlobalLyricsLineMetadataKey {
+    for MnxDocumentGlobalLyricsLineMetadataKey
+{
     fn from(value: &MnxDocumentGlobalLyricsLineMetadataKey) -> Self {
         value.clone()
     }
 }
 impl ::std::str::FromStr for MnxDocumentGlobalLyricsLineMetadataKey {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         if regress::Regex::new("^.*$").unwrap().find(value).is_none() {
             return Err("doesn't match pattern \"^.*$\"".into());
         }
@@ -3542,14 +3503,11 @@ impl ::std::str::FromStr for MnxDocumentGlobalLyricsLineMetadataKey {
 }
 impl ::std::convert::TryFrom<&str> for MnxDocumentGlobalLyricsLineMetadataKey {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<&::std::string::String>
-for MnxDocumentGlobalLyricsLineMetadataKey {
+impl ::std::convert::TryFrom<&::std::string::String> for MnxDocumentGlobalLyricsLineMetadataKey {
     type Error = self::error::ConversionError;
     fn try_from(
         value: &::std::string::String,
@@ -3557,8 +3515,7 @@ for MnxDocumentGlobalLyricsLineMetadataKey {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<::std::string::String>
-for MnxDocumentGlobalLyricsLineMetadataKey {
+impl ::std::convert::TryFrom<::std::string::String> for MnxDocumentGlobalLyricsLineMetadataKey {
     type Error = self::error::ConversionError;
     fn try_from(
         value: ::std::string::String,
@@ -3606,7 +3563,8 @@ pub struct MnxDocumentGlobalLyricsLineMetadataValue {
     pub lang: ::std::option::Option<::std::string::String>,
 }
 impl ::std::convert::From<&MnxDocumentGlobalLyricsLineMetadataValue>
-for MnxDocumentGlobalLyricsLineMetadataValue {
+    for MnxDocumentGlobalLyricsLineMetadataValue
+{
     fn from(value: &MnxDocumentGlobalLyricsLineMetadataValue) -> Self {
         value.clone()
     }
@@ -3869,8 +3827,7 @@ pub struct MnxDocumentGlobalMeasuresItem {
     #[serde(default, skip_serializing_if = "::std::option::Option::is_none")]
     pub time: ::std::option::Option<MnxDocumentGlobalMeasuresItemTime>,
 }
-impl ::std::convert::From<&MnxDocumentGlobalMeasuresItem>
-for MnxDocumentGlobalMeasuresItem {
+impl ::std::convert::From<&MnxDocumentGlobalMeasuresItem> for MnxDocumentGlobalMeasuresItem {
     fn from(value: &MnxDocumentGlobalMeasuresItem) -> Self {
         value.clone()
     }
@@ -3937,7 +3894,8 @@ pub struct MnxDocumentGlobalMeasuresItemBarline {
     pub type_: MnxDocumentGlobalMeasuresItemBarlineType,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemBarline>
-for MnxDocumentGlobalMeasuresItemBarline {
+    for MnxDocumentGlobalMeasuresItemBarline
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemBarline) -> Self {
         value.clone()
     }
@@ -3980,7 +3938,7 @@ impl MnxDocumentGlobalMeasuresItemBarline {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum MnxDocumentGlobalMeasuresItemBarlineType {
     #[serde(rename = "regular")]
@@ -4030,9 +3988,7 @@ impl ::std::fmt::Display for MnxDocumentGlobalMeasuresItemBarlineType {
 }
 impl ::std::str::FromStr for MnxDocumentGlobalMeasuresItemBarlineType {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "regular" => Ok(Self::Regular),
             "dotted" => Ok(Self::Dotted),
@@ -4051,14 +4007,11 @@ impl ::std::str::FromStr for MnxDocumentGlobalMeasuresItemBarlineType {
 }
 impl ::std::convert::TryFrom<&str> for MnxDocumentGlobalMeasuresItemBarlineType {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<&::std::string::String>
-for MnxDocumentGlobalMeasuresItemBarlineType {
+impl ::std::convert::TryFrom<&::std::string::String> for MnxDocumentGlobalMeasuresItemBarlineType {
     type Error = self::error::ConversionError;
     fn try_from(
         value: &::std::string::String,
@@ -4066,8 +4019,7 @@ for MnxDocumentGlobalMeasuresItemBarlineType {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<::std::string::String>
-for MnxDocumentGlobalMeasuresItemBarlineType {
+impl ::std::convert::TryFrom<::std::string::String> for MnxDocumentGlobalMeasuresItemBarlineType {
     type Error = self::error::ConversionError;
     fn try_from(
         value: ::std::string::String,
@@ -4123,7 +4075,8 @@ pub struct MnxDocumentGlobalMeasuresItemEnding {
     pub open: ::std::option::Option<bool>,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemEnding>
-for MnxDocumentGlobalMeasuresItemEnding {
+    for MnxDocumentGlobalMeasuresItemEnding
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemEnding) -> Self {
         value.clone()
     }
@@ -4168,7 +4121,8 @@ pub struct MnxDocumentGlobalMeasuresItemFine {
     pub location: RhythmicPosition,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemFine>
-for MnxDocumentGlobalMeasuresItemFine {
+    for MnxDocumentGlobalMeasuresItemFine
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemFine) -> Self {
         value.clone()
     }
@@ -4213,7 +4167,8 @@ pub struct MnxDocumentGlobalMeasuresItemJump {
     pub type_: MnxDocumentGlobalMeasuresItemJumpType,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemJump>
-for MnxDocumentGlobalMeasuresItemJump {
+    for MnxDocumentGlobalMeasuresItemJump
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemJump) -> Self {
         value.clone()
     }
@@ -4247,7 +4202,7 @@ impl MnxDocumentGlobalMeasuresItemJump {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum MnxDocumentGlobalMeasuresItemJumpType {
     #[serde(rename = "dsalfine")]
@@ -4270,9 +4225,7 @@ impl ::std::fmt::Display for MnxDocumentGlobalMeasuresItemJumpType {
 }
 impl ::std::str::FromStr for MnxDocumentGlobalMeasuresItemJumpType {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "dsalfine" => Ok(Self::Dsalfine),
             "segno" => Ok(Self::Segno),
@@ -4282,14 +4235,11 @@ impl ::std::str::FromStr for MnxDocumentGlobalMeasuresItemJumpType {
 }
 impl ::std::convert::TryFrom<&str> for MnxDocumentGlobalMeasuresItemJumpType {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<&::std::string::String>
-for MnxDocumentGlobalMeasuresItemJumpType {
+impl ::std::convert::TryFrom<&::std::string::String> for MnxDocumentGlobalMeasuresItemJumpType {
     type Error = self::error::ConversionError;
     fn try_from(
         value: &::std::string::String,
@@ -4297,8 +4247,7 @@ for MnxDocumentGlobalMeasuresItemJumpType {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<::std::string::String>
-for MnxDocumentGlobalMeasuresItemJumpType {
+impl ::std::convert::TryFrom<::std::string::String> for MnxDocumentGlobalMeasuresItemJumpType {
     type Error = self::error::ConversionError;
     fn try_from(
         value: ::std::string::String,
@@ -4340,8 +4289,7 @@ pub struct MnxDocumentGlobalMeasuresItemKey {
     pub color: ::std::option::Option<Color>,
     pub fifths: i64,
 }
-impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemKey>
-for MnxDocumentGlobalMeasuresItemKey {
+impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemKey> for MnxDocumentGlobalMeasuresItemKey {
     fn from(value: &MnxDocumentGlobalMeasuresItemKey) -> Self {
         value.clone()
     }
@@ -4374,14 +4322,17 @@ pub struct MnxDocumentGlobalMeasuresItemRepeatEnd {
     pub times: ::std::option::Option<i64>,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemRepeatEnd>
-for MnxDocumentGlobalMeasuresItemRepeatEnd {
+    for MnxDocumentGlobalMeasuresItemRepeatEnd
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemRepeatEnd) -> Self {
         value.clone()
     }
 }
 impl ::std::default::Default for MnxDocumentGlobalMeasuresItemRepeatEnd {
     fn default() -> Self {
-        Self { times: Default::default() }
+        Self {
+            times: Default::default(),
+        }
     }
 }
 impl MnxDocumentGlobalMeasuresItemRepeatEnd {
@@ -4404,7 +4355,8 @@ impl MnxDocumentGlobalMeasuresItemRepeatEnd {
 #[serde(deny_unknown_fields)]
 pub struct MnxDocumentGlobalMeasuresItemRepeatStart {}
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemRepeatStart>
-for MnxDocumentGlobalMeasuresItemRepeatStart {
+    for MnxDocumentGlobalMeasuresItemRepeatStart
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemRepeatStart) -> Self {
         value.clone()
     }
@@ -4459,7 +4411,8 @@ pub struct MnxDocumentGlobalMeasuresItemSegno {
     pub location: RhythmicPosition,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemSegno>
-for MnxDocumentGlobalMeasuresItemSegno {
+    for MnxDocumentGlobalMeasuresItemSegno
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemSegno) -> Self {
         value.clone()
     }
@@ -4504,7 +4457,8 @@ pub struct MnxDocumentGlobalMeasuresItemTemposItem {
     pub value: NoteValue,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemTemposItem>
-for MnxDocumentGlobalMeasuresItemTemposItem {
+    for MnxDocumentGlobalMeasuresItemTemposItem
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemTemposItem) -> Self {
         value.clone()
     }
@@ -4554,7 +4508,8 @@ pub struct MnxDocumentGlobalMeasuresItemTime {
     pub unit: MnxDocumentGlobalMeasuresItemTimeUnit,
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemTime>
-for MnxDocumentGlobalMeasuresItemTime {
+    for MnxDocumentGlobalMeasuresItemTime
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemTime) -> Self {
         value.clone()
     }
@@ -4599,19 +4554,16 @@ impl ::std::convert::From<MnxDocumentGlobalMeasuresItemTimeUnit> for i64 {
     }
 }
 impl ::std::convert::From<&MnxDocumentGlobalMeasuresItemTimeUnit>
-for MnxDocumentGlobalMeasuresItemTimeUnit {
+    for MnxDocumentGlobalMeasuresItemTimeUnit
+{
     fn from(value: &MnxDocumentGlobalMeasuresItemTimeUnit) -> Self {
         value.clone()
     }
 }
 impl ::std::convert::TryFrom<i64> for MnxDocumentGlobalMeasuresItemTimeUnit {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: i64,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
-        if ![1_i64, 2_i64, 4_i64, 8_i64, 16_i64, 32_i64, 64_i64, 128_i64]
-            .contains(&value)
-        {
+    fn try_from(value: i64) -> ::std::result::Result<Self, self::error::ConversionError> {
+        if ![1_i64, 2_i64, 4_i64, 8_i64, 16_i64, 32_i64, 64_i64, 128_i64].contains(&value) {
             Err("invalid value".into())
         } else {
             Ok(Self(value))
@@ -4624,7 +4576,7 @@ impl<'de> ::serde::Deserialize<'de> for MnxDocumentGlobalMeasuresItemTimeUnit {
         D: ::serde::Deserializer<'de>,
     {
         Self::try_from(<i64>::deserialize(deserializer)?)
-            .map_err(|e| { <D::Error as ::serde::de::Error>::custom(e.to_string()) })
+            .map_err(|e| <D::Error as ::serde::de::Error>::custom(e.to_string()))
     }
 }
 ///MnxDocumentGlobalStylesItem
@@ -5200,8 +5152,7 @@ pub struct MnxDocumentPartsItemMeasuresItem {
     pub ottavas: ::std::vec::Vec<MnxDocumentPartsItemMeasuresItemOttavasItem>,
     pub sequences: ::std::vec::Vec<MnxDocumentPartsItemMeasuresItemSequencesItem>,
 }
-impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItem>
-for MnxDocumentPartsItemMeasuresItem {
+impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItem> for MnxDocumentPartsItemMeasuresItem {
     fn from(value: &MnxDocumentPartsItemMeasuresItem) -> Self {
         value.clone()
     }
@@ -5276,7 +5227,8 @@ pub struct MnxDocumentPartsItemMeasuresItemClefsItem {
     pub staff: ::std::option::Option<StaffNumber>,
 }
 impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItemClefsItem>
-for MnxDocumentPartsItemMeasuresItemClefsItem {
+    for MnxDocumentPartsItemMeasuresItemClefsItem
+{
     fn from(value: &MnxDocumentPartsItemMeasuresItemClefsItem) -> Self {
         value.clone()
     }
@@ -5342,7 +5294,8 @@ pub struct MnxDocumentPartsItemMeasuresItemClefsItemClef {
     pub staff_position: StaffPosition,
 }
 impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItemClefsItemClef>
-for MnxDocumentPartsItemMeasuresItemClefsItemClef {
+    for MnxDocumentPartsItemMeasuresItemClefsItemClef
+{
     fn from(value: &MnxDocumentPartsItemMeasuresItemClefsItemClef) -> Self {
         value.clone()
     }
@@ -5377,7 +5330,7 @@ impl MnxDocumentPartsItemMeasuresItemClefsItemClef {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
     C,
@@ -5400,9 +5353,7 @@ impl ::std::fmt::Display for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
 }
 impl ::std::str::FromStr for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "C" => Ok(Self::C),
             "F" => Ok(Self::F),
@@ -5411,17 +5362,15 @@ impl ::std::str::FromStr for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
         }
     }
 }
-impl ::std::convert::TryFrom<&str>
-for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
+impl ::std::convert::TryFrom<&str> for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
 impl ::std::convert::TryFrom<&::std::string::String>
-for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
+    for MnxDocumentPartsItemMeasuresItemClefsItemClefSign
+{
     type Error = self::error::ConversionError;
     fn try_from(
         value: &::std::string::String,
@@ -5430,7 +5379,8 @@ for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
     }
 }
 impl ::std::convert::TryFrom<::std::string::String>
-for MnxDocumentPartsItemMeasuresItemClefsItemClefSign {
+    for MnxDocumentPartsItemMeasuresItemClefsItemClefSign
+{
     type Error = self::error::ConversionError;
     fn try_from(
         value: ::std::string::String,
@@ -5483,7 +5433,8 @@ pub struct MnxDocumentPartsItemMeasuresItemDynamicsItem {
     pub voice: ::std::option::Option<VoiceName>,
 }
 impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItemDynamicsItem>
-for MnxDocumentPartsItemMeasuresItemDynamicsItem {
+    for MnxDocumentPartsItemMeasuresItemDynamicsItem
+{
     fn from(value: &MnxDocumentPartsItemMeasuresItemDynamicsItem) -> Self {
         value.clone()
     }
@@ -5551,7 +5502,8 @@ pub struct MnxDocumentPartsItemMeasuresItemOttavasItem {
     pub voice: ::std::option::Option<VoiceName>,
 }
 impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItemOttavasItem>
-for MnxDocumentPartsItemMeasuresItemOttavasItem {
+    for MnxDocumentPartsItemMeasuresItemOttavasItem
+{
     fn from(value: &MnxDocumentPartsItemMeasuresItemOttavasItem) -> Self {
         value.clone()
     }
@@ -5594,16 +5546,15 @@ impl ::std::convert::From<MnxDocumentPartsItemMeasuresItemOttavasItemValue> for 
     }
 }
 impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItemOttavasItemValue>
-for MnxDocumentPartsItemMeasuresItemOttavasItemValue {
+    for MnxDocumentPartsItemMeasuresItemOttavasItemValue
+{
     fn from(value: &MnxDocumentPartsItemMeasuresItemOttavasItemValue) -> Self {
         value.clone()
     }
 }
 impl ::std::convert::TryFrom<i64> for MnxDocumentPartsItemMeasuresItemOttavasItemValue {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: i64,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: i64) -> ::std::result::Result<Self, self::error::ConversionError> {
         if ![1_i64, 2_i64, -1_i64, -2_i64, 3_i64, -3_i64].contains(&value) {
             Err("invalid value".into())
         } else {
@@ -5611,14 +5562,13 @@ impl ::std::convert::TryFrom<i64> for MnxDocumentPartsItemMeasuresItemOttavasIte
         }
     }
 }
-impl<'de> ::serde::Deserialize<'de>
-for MnxDocumentPartsItemMeasuresItemOttavasItemValue {
+impl<'de> ::serde::Deserialize<'de> for MnxDocumentPartsItemMeasuresItemOttavasItemValue {
     fn deserialize<D>(deserializer: D) -> ::std::result::Result<Self, D::Error>
     where
         D: ::serde::Deserializer<'de>,
     {
         Self::try_from(<i64>::deserialize(deserializer)?)
-            .map_err(|e| { <D::Error as ::serde::de::Error>::custom(e.to_string()) })
+            .map_err(|e| <D::Error as ::serde::de::Error>::custom(e.to_string()))
     }
 }
 ///MnxDocumentPartsItemMeasuresItemSequencesItem
@@ -5661,7 +5611,8 @@ pub struct MnxDocumentPartsItemMeasuresItemSequencesItem {
     pub voice: ::std::option::Option<VoiceName>,
 }
 impl ::std::convert::From<&MnxDocumentPartsItemMeasuresItemSequencesItem>
-for MnxDocumentPartsItemMeasuresItemSequencesItem {
+    for MnxDocumentPartsItemMeasuresItemSequencesItem
+{
     fn from(value: &MnxDocumentPartsItemMeasuresItemSequencesItem) -> Self {
         value.clone()
     }
@@ -5827,7 +5778,8 @@ pub struct MnxDocumentScoresItemMultimeasureRestsItem {
     pub start: MeasureNumber,
 }
 impl ::std::convert::From<&MnxDocumentScoresItemMultimeasureRestsItem>
-for MnxDocumentScoresItemMultimeasureRestsItem {
+    for MnxDocumentScoresItemMultimeasureRestsItem
+{
     fn from(value: &MnxDocumentScoresItemMultimeasureRestsItem) -> Self {
         value.clone()
     }
@@ -5900,8 +5852,7 @@ pub struct MnxDocumentScoresItemPagesItem {
     pub layout: ::std::option::Option<Id>,
     pub systems: ::std::vec::Vec<MnxDocumentScoresItemPagesItemSystemsItem>,
 }
-impl ::std::convert::From<&MnxDocumentScoresItemPagesItem>
-for MnxDocumentScoresItemPagesItem {
+impl ::std::convert::From<&MnxDocumentScoresItemPagesItem> for MnxDocumentScoresItemPagesItem {
     fn from(value: &MnxDocumentScoresItemPagesItem) -> Self {
         value.clone()
     }
@@ -5962,13 +5913,12 @@ pub struct MnxDocumentScoresItemPagesItemSystemsItem {
         default,
         skip_serializing_if = "::std::vec::Vec::is_empty"
     )]
-    pub layout_changes: ::std::vec::Vec<
-        MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem,
-    >,
+    pub layout_changes: ::std::vec::Vec<MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem>,
     pub measure: MeasureNumber,
 }
 impl ::std::convert::From<&MnxDocumentScoresItemPagesItemSystemsItem>
-for MnxDocumentScoresItemPagesItemSystemsItem {
+    for MnxDocumentScoresItemPagesItemSystemsItem
+{
     fn from(value: &MnxDocumentScoresItemPagesItemSystemsItem) -> Self {
         value.clone()
     }
@@ -6008,7 +5958,8 @@ pub struct MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem {
     pub location: MeasureRhythmicPosition,
 }
 impl ::std::convert::From<&MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem>
-for MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem {
+    for MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem
+{
     fn from(value: &MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem) -> Self {
         value.clone()
     }
@@ -6115,7 +6066,7 @@ impl NoteValue {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum NoteValueBase {
     #[serde(rename = "duplexMaxima")]
@@ -6183,9 +6134,7 @@ impl ::std::fmt::Display for NoteValueBase {
 }
 impl ::std::str::FromStr for NoteValueBase {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "duplexMaxima" => Ok(Self::DuplexMaxima),
             "maxima" => Ok(Self::Maxima),
@@ -6210,9 +6159,7 @@ impl ::std::str::FromStr for NoteValueBase {
 }
 impl ::std::convert::TryFrom<&str> for NoteValueBase {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -6282,15 +6229,7 @@ impl NoteValueQuantity {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct Orientation(pub ::std::string::String);
@@ -6687,13 +6626,29 @@ impl ::std::convert::From<::std::vec::Vec<SequenceContentItem>> for SequenceCont
 /// </details>
 #[derive(::serde::Deserialize, ::serde::Serialize, Clone, Debug)]
 pub struct SequenceContentItem {
-    #[serde(flatten, default, skip_serializing_if = "::std::option::Option::is_none")]
+    #[serde(
+        flatten,
+        default,
+        skip_serializing_if = "::std::option::Option::is_none"
+    )]
     pub subtype_0: ::std::option::Option<Event>,
-    #[serde(flatten, default, skip_serializing_if = "::std::option::Option::is_none")]
+    #[serde(
+        flatten,
+        default,
+        skip_serializing_if = "::std::option::Option::is_none"
+    )]
     pub subtype_1: ::std::option::Option<SequenceContentItemSubtype1>,
-    #[serde(flatten, default, skip_serializing_if = "::std::option::Option::is_none")]
+    #[serde(
+        flatten,
+        default,
+        skip_serializing_if = "::std::option::Option::is_none"
+    )]
     pub subtype_2: ::std::option::Option<SequenceContentItemSubtype2>,
-    #[serde(flatten, default, skip_serializing_if = "::std::option::Option::is_none")]
+    #[serde(
+        flatten,
+        default,
+        skip_serializing_if = "::std::option::Option::is_none"
+    )]
     pub subtype_3: ::std::option::Option<SequenceContentItemSubtype3>,
 }
 impl ::std::convert::From<&SequenceContentItem> for SequenceContentItem {
@@ -6814,7 +6769,7 @@ impl SequenceContentItemSubtype1 {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum SequenceContentItemSubtype1GraceType {
     #[serde(rename = "makeTime")]
@@ -6840,9 +6795,7 @@ impl ::std::fmt::Display for SequenceContentItemSubtype1GraceType {
 }
 impl ::std::str::FromStr for SequenceContentItemSubtype1GraceType {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "makeTime" => Ok(Self::MakeTime),
             "stealFollowing" => Ok(Self::StealFollowing),
@@ -6853,14 +6806,11 @@ impl ::std::str::FromStr for SequenceContentItemSubtype1GraceType {
 }
 impl ::std::convert::TryFrom<&str> for SequenceContentItemSubtype1GraceType {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<&::std::string::String>
-for SequenceContentItemSubtype1GraceType {
+impl ::std::convert::TryFrom<&::std::string::String> for SequenceContentItemSubtype1GraceType {
     type Error = self::error::ConversionError;
     fn try_from(
         value: &::std::string::String,
@@ -6868,8 +6818,7 @@ for SequenceContentItemSubtype1GraceType {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<::std::string::String>
-for SequenceContentItemSubtype1GraceType {
+impl ::std::convert::TryFrom<::std::string::String> for SequenceContentItemSubtype1GraceType {
     type Error = self::error::ConversionError;
     fn try_from(
         value: ::std::string::String,
@@ -6991,7 +6940,7 @@ impl SequenceContentItemSubtype2 {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum SequenceContentItemSubtype2Bracket {
     #[serde(rename = "yes")]
@@ -7017,9 +6966,7 @@ impl ::std::fmt::Display for SequenceContentItemSubtype2Bracket {
 }
 impl ::std::str::FromStr for SequenceContentItemSubtype2Bracket {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "yes" => Ok(Self::Yes),
             "no" => Ok(Self::No),
@@ -7030,14 +6977,11 @@ impl ::std::str::FromStr for SequenceContentItemSubtype2Bracket {
 }
 impl ::std::convert::TryFrom<&str> for SequenceContentItemSubtype2Bracket {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<&::std::string::String>
-for SequenceContentItemSubtype2Bracket {
+impl ::std::convert::TryFrom<&::std::string::String> for SequenceContentItemSubtype2Bracket {
     type Error = self::error::ConversionError;
     fn try_from(
         value: &::std::string::String,
@@ -7045,8 +6989,7 @@ for SequenceContentItemSubtype2Bracket {
         value.parse()
     }
 }
-impl ::std::convert::TryFrom<::std::string::String>
-for SequenceContentItemSubtype2Bracket {
+impl ::std::convert::TryFrom<::std::string::String> for SequenceContentItemSubtype2Bracket {
     type Error = self::error::ConversionError;
     fn try_from(
         value: ::std::string::String,
@@ -7119,7 +7062,7 @@ impl SequenceContentItemSubtype3 {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum SlurSide {
     #[serde(rename = "up")]
@@ -7142,9 +7085,7 @@ impl ::std::fmt::Display for SlurSide {
 }
 impl ::std::str::FromStr for SlurSide {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "up" => Ok(Self::Up),
             "down" => Ok(Self::Down),
@@ -7154,9 +7095,7 @@ impl ::std::str::FromStr for SlurSide {
 }
 impl ::std::convert::TryFrom<&str> for SlurSide {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -7187,15 +7126,7 @@ impl ::std::convert::TryFrom<::std::string::String> for SlurSide {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct SmuflFont(pub ::std::string::String);
@@ -7242,15 +7173,7 @@ impl ::std::fmt::Display for SmuflFont {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct SmuflGlyph(pub ::std::string::String);
@@ -7297,15 +7220,7 @@ impl ::std::fmt::Display for SmuflGlyph {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct StaffLabel(pub ::std::string::String);
@@ -7352,15 +7267,7 @@ impl ::std::fmt::Display for StaffLabel {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct StaffLabelref(pub ::std::string::String);
@@ -7547,7 +7454,7 @@ impl ::std::fmt::Display for StaffPosition {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum StaffSymbol {
     #[serde(rename = "bracket")]
@@ -7573,9 +7480,7 @@ impl ::std::fmt::Display for StaffSymbol {
 }
 impl ::std::str::FromStr for StaffSymbol {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "bracket" => Ok(Self::Bracket),
             "brace" => Ok(Self::Brace),
@@ -7586,9 +7491,7 @@ impl ::std::str::FromStr for StaffSymbol {
 }
 impl ::std::convert::TryFrom<&str> for StaffSymbol {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -7632,7 +7535,7 @@ impl ::std::convert::TryFrom<::std::string::String> for StaffSymbol {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum StemDirection {
     #[serde(rename = "up")]
@@ -7655,9 +7558,7 @@ impl ::std::fmt::Display for StemDirection {
 }
 impl ::std::str::FromStr for StemDirection {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "up" => Ok(Self::Up),
             "down" => Ok(Self::Down),
@@ -7667,9 +7568,7 @@ impl ::std::str::FromStr for StemDirection {
 }
 impl ::std::convert::TryFrom<&str> for StemDirection {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -7700,15 +7599,7 @@ impl ::std::convert::TryFrom<::std::string::String> for StemDirection {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct String(pub ::std::string::String);
@@ -7755,15 +7646,7 @@ impl ::std::fmt::Display for String {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct StyleClass(pub ::std::string::String);
@@ -7898,8 +7781,7 @@ impl ::std::ops::Deref for SystemLayoutContent {
         &self.0
     }
 }
-impl ::std::convert::From<SystemLayoutContent>
-for ::std::vec::Vec<SystemLayoutContentItem> {
+impl ::std::convert::From<SystemLayoutContent> for ::std::vec::Vec<SystemLayoutContentItem> {
     fn from(value: SystemLayoutContent) -> Self {
         value.0
     }
@@ -7909,8 +7791,7 @@ impl ::std::convert::From<&SystemLayoutContent> for SystemLayoutContent {
         value.clone()
     }
 }
-impl ::std::convert::From<::std::vec::Vec<SystemLayoutContentItem>>
-for SystemLayoutContent {
+impl ::std::convert::From<::std::vec::Vec<SystemLayoutContentItem>> for SystemLayoutContent {
     fn from(value: ::std::vec::Vec<SystemLayoutContentItem>) -> Self {
         Self(value)
     }
@@ -8079,7 +7960,8 @@ pub struct SystemLayoutContentItemSourcesItem {
     pub voice: ::std::option::Option<VoiceName>,
 }
 impl ::std::convert::From<&SystemLayoutContentItemSourcesItem>
-for SystemLayoutContentItemSourcesItem {
+    for SystemLayoutContentItemSourcesItem
+{
     fn from(value: &SystemLayoutContentItemSourcesItem) -> Self {
         value.clone()
     }
@@ -8114,7 +7996,7 @@ impl SystemLayoutContentItemSourcesItem {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum TupletDisplaySetting {
     #[serde(rename = "noNumber")]
@@ -8140,9 +8022,7 @@ impl ::std::fmt::Display for TupletDisplaySetting {
 }
 impl ::std::str::FromStr for TupletDisplaySetting {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "noNumber" => Ok(Self::NoNumber),
             "inner" => Ok(Self::Inner),
@@ -8153,9 +8033,7 @@ impl ::std::str::FromStr for TupletDisplaySetting {
 }
 impl ::std::convert::TryFrom<&str> for TupletDisplaySetting {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -8199,7 +8077,7 @@ impl ::std::convert::TryFrom<::std::string::String> for TupletDisplaySetting {
     Hash,
     Ord,
     PartialEq,
-    PartialOrd
+    PartialOrd,
 )]
 pub enum UpOrDown {
     #[serde(rename = "up")]
@@ -8222,9 +8100,7 @@ impl ::std::fmt::Display for UpOrDown {
 }
 impl ::std::str::FromStr for UpOrDown {
     type Err = self::error::ConversionError;
-    fn from_str(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn from_str(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         match value {
             "up" => Ok(Self::Up),
             "down" => Ok(Self::Down),
@@ -8234,9 +8110,7 @@ impl ::std::str::FromStr for UpOrDown {
 }
 impl ::std::convert::TryFrom<&str> for UpOrDown {
     type Error = self::error::ConversionError;
-    fn try_from(
-        value: &str,
-    ) -> ::std::result::Result<Self, self::error::ConversionError> {
+    fn try_from(value: &str) -> ::std::result::Result<Self, self::error::ConversionError> {
         value.parse()
     }
 }
@@ -8267,15 +8141,7 @@ impl ::std::convert::TryFrom<::std::string::String> for UpOrDown {
 /// ```
 /// </details>
 #[derive(
-    ::serde::Deserialize,
-    ::serde::Serialize,
-    Clone,
-    Debug,
-    Eq,
-    Hash,
-    Ord,
-    PartialEq,
-    PartialOrd
+    ::serde::Deserialize, ::serde::Serialize, Clone, Debug, Eq, Hash, Ord, PartialEq, PartialOrd,
 )]
 #[serde(transparent)]
 pub struct VoiceName(pub ::std::string::String);
@@ -8320,10 +8186,7 @@ pub mod builder {
             ::std::vec::Vec<super::BeamListItemHooksItem>,
             ::std::string::String,
         >,
-        inner: ::std::result::Result<
-            ::std::option::Option<super::BeamList>,
-            ::std::string::String,
-        >,
+        inner: ::std::result::Result<::std::option::Option<super::BeamList>, ::std::string::String>,
     }
     impl ::std::default::Default for BeamListItem {
         fn default() -> Self {
@@ -8342,9 +8205,7 @@ pub mod builder {
         {
             self.events = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for events: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for events: {}", e));
             self
         }
         pub fn hooks<T>(mut self, value: T) -> Self
@@ -8354,9 +8215,7 @@ pub mod builder {
         {
             self.hooks = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for hooks: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for hooks: {}", e));
             self
         }
         pub fn inner<T>(mut self, value: T) -> Self
@@ -8366,9 +8225,7 @@ pub mod builder {
         {
             self.inner = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for inner: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for inner: {}", e));
             self
         }
     }
@@ -8395,10 +8252,8 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct BeamListItemHooksItem {
-        direction: ::std::result::Result<
-            super::BeamListItemHooksItemDirection,
-            ::std::string::String,
-        >,
+        direction:
+            ::std::result::Result<super::BeamListItemHooksItemDirection, ::std::string::String>,
         event: ::std::result::Result<super::Id, ::std::string::String>,
     }
     impl ::std::default::Default for BeamListItemHooksItem {
@@ -8417,9 +8272,7 @@ pub mod builder {
         {
             self.direction = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for direction: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for direction: {}", e));
             self
         }
         pub fn event<T>(mut self, value: T) -> Self
@@ -8429,14 +8282,11 @@ pub mod builder {
         {
             self.event = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for event: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for event: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<BeamListItemHooksItem>
-    for super::BeamListItemHooksItem {
+    impl ::std::convert::TryFrom<BeamListItemHooksItem> for super::BeamListItemHooksItem {
         type Error = super::error::ConversionError;
         fn try_from(
             value: BeamListItemHooksItem,
@@ -8457,50 +8307,25 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct Event {
-        duration: ::std::result::Result<
-            ::std::option::Option<super::NoteValue>,
-            ::std::string::String,
-        >,
-        id: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
-        lyrics: ::std::result::Result<
-            ::std::option::Option<super::EventLyrics>,
-            ::std::string::String,
-        >,
+        duration:
+            ::std::result::Result<::std::option::Option<super::NoteValue>, ::std::string::String>,
+        id: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
+        lyrics:
+            ::std::result::Result<::std::option::Option<super::EventLyrics>, ::std::string::String>,
         markings: ::std::result::Result<
             ::std::option::Option<super::EventMarkings>,
             ::std::string::String,
         >,
-        measure: ::std::result::Result<
-            ::std::option::Option<bool>,
-            ::std::string::String,
-        >,
-        notes: ::std::result::Result<
-            ::std::vec::Vec<super::EventNotesItem>,
-            ::std::string::String,
-        >,
-        orient: ::std::result::Result<
-            ::std::option::Option<super::Orientation>,
-            ::std::string::String,
-        >,
-        rest: ::std::result::Result<
-            ::std::option::Option<super::EventRest>,
-            ::std::string::String,
-        >,
-        slurs: ::std::result::Result<
-            ::std::vec::Vec<super::EventSlursItem>,
-            ::std::string::String,
-        >,
-        smufl_font: ::std::result::Result<
-            ::std::option::Option<super::SmuflFont>,
-            ::std::string::String,
-        >,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
+        measure: ::std::result::Result<::std::option::Option<bool>, ::std::string::String>,
+        notes: ::std::result::Result<::std::vec::Vec<super::EventNotesItem>, ::std::string::String>,
+        orient:
+            ::std::result::Result<::std::option::Option<super::Orientation>, ::std::string::String>,
+        rest: ::std::result::Result<::std::option::Option<super::EventRest>, ::std::string::String>,
+        slurs: ::std::result::Result<::std::vec::Vec<super::EventSlursItem>, ::std::string::String>,
+        smufl_font:
+            ::std::result::Result<::std::option::Option<super::SmuflFont>, ::std::string::String>,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
         stem_direction: ::std::result::Result<
             ::std::option::Option<super::StemDirection>,
             ::std::string::String,
@@ -8537,9 +8362,7 @@ pub mod builder {
         {
             self.duration = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for duration: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for duration: {}", e));
             self
         }
         pub fn id<T>(mut self, value: T) -> Self
@@ -8559,9 +8382,7 @@ pub mod builder {
         {
             self.lyrics = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for lyrics: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for lyrics: {}", e));
             self
         }
         pub fn markings<T>(mut self, value: T) -> Self
@@ -8571,9 +8392,7 @@ pub mod builder {
         {
             self.markings = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for markings: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for markings: {}", e));
             self
         }
         pub fn measure<T>(mut self, value: T) -> Self
@@ -8583,9 +8402,7 @@ pub mod builder {
         {
             self.measure = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for measure: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for measure: {}", e));
             self
         }
         pub fn notes<T>(mut self, value: T) -> Self
@@ -8595,9 +8412,7 @@ pub mod builder {
         {
             self.notes = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for notes: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for notes: {}", e));
             self
         }
         pub fn orient<T>(mut self, value: T) -> Self
@@ -8607,9 +8422,7 @@ pub mod builder {
         {
             self.orient = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for orient: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for orient: {}", e));
             self
         }
         pub fn rest<T>(mut self, value: T) -> Self
@@ -8629,9 +8442,7 @@ pub mod builder {
         {
             self.slurs = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for slurs: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for slurs: {}", e));
             self
         }
         pub fn smufl_font<T>(mut self, value: T) -> Self
@@ -8641,9 +8452,7 @@ pub mod builder {
         {
             self.smufl_font = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for smufl_font: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for smufl_font: {}", e));
             self
         }
         pub fn staff<T>(mut self, value: T) -> Self
@@ -8653,9 +8462,7 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
         pub fn stem_direction<T>(mut self, value: T) -> Self
@@ -8665,9 +8472,7 @@ pub mod builder {
         {
             self.stem_direction = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for stem_direction: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for stem_direction: {}", e));
             self
         }
         pub fn type_<T>(mut self, value: T) -> Self
@@ -8677,17 +8482,13 @@ pub mod builder {
         {
             self.type_ = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for type_: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for type_: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<Event> for super::Event {
         type Error = super::error::ConversionError;
-        fn try_from(
-            value: Event,
-        ) -> ::std::result::Result<Self, super::error::ConversionError> {
+        fn try_from(value: Event) -> ::std::result::Result<Self, super::error::ConversionError> {
             Ok(Self {
                 duration: value.duration?,
                 id: value.id?,
@@ -8727,10 +8528,7 @@ pub mod builder {
     #[derive(Clone, Debug)]
     pub struct EventLyrics {
         lines: ::std::result::Result<
-            ::std::collections::HashMap<
-                super::EventLyricsLinesKey,
-                super::EventLyricsLinesValue,
-            >,
+            ::std::collections::HashMap<super::EventLyricsLinesKey, super::EventLyricsLinesValue>,
             ::std::string::String,
         >,
     }
@@ -8754,9 +8552,7 @@ pub mod builder {
         {
             self.lines = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for lines: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for lines: {}", e));
             self
         }
     }
@@ -8765,12 +8561,16 @@ pub mod builder {
         fn try_from(
             value: EventLyrics,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { lines: value.lines? })
+            Ok(Self {
+                lines: value.lines?,
+            })
         }
     }
     impl ::std::convert::From<super::EventLyrics> for EventLyrics {
         fn from(value: super::EventLyrics) -> Self {
-            Self { lines: Ok(value.lines) }
+            Self {
+                lines: Ok(value.lines),
+            }
         }
     }
     #[derive(Clone, Debug)]
@@ -8802,21 +8602,16 @@ pub mod builder {
         }
         pub fn type_<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventLyricsLinesValueType>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventLyricsLinesValueType>>,
             T::Error: ::std::fmt::Display,
         {
             self.type_ = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for type_: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for type_: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<EventLyricsLinesValue>
-    for super::EventLyricsLinesValue {
+    impl ::std::convert::TryFrom<EventLyricsLinesValue> for super::EventLyricsLinesValue {
         type Error = super::error::ConversionError;
         fn try_from(
             value: EventLyricsLinesValue,
@@ -8902,156 +8697,112 @@ pub mod builder {
     impl EventMarkings {
         pub fn accent<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsAccent>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsAccent>>,
             T::Error: ::std::fmt::Display,
         {
             self.accent = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for accent: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for accent: {}", e));
             self
         }
         pub fn breath<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsBreath>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsBreath>>,
             T::Error: ::std::fmt::Display,
         {
             self.breath = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for breath: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for breath: {}", e));
             self
         }
         pub fn soft_accent<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsSoftAccent>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsSoftAccent>>,
             T::Error: ::std::fmt::Display,
         {
             self.soft_accent = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for soft_accent: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for soft_accent: {}", e));
             self
         }
         pub fn spiccato<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsSpiccato>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsSpiccato>>,
             T::Error: ::std::fmt::Display,
         {
             self.spiccato = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for spiccato: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for spiccato: {}", e));
             self
         }
         pub fn staccatissimo<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsStaccatissimo>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsStaccatissimo>>,
             T::Error: ::std::fmt::Display,
         {
             self.staccatissimo = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staccatissimo: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staccatissimo: {}", e));
             self
         }
         pub fn staccato<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsStaccato>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsStaccato>>,
             T::Error: ::std::fmt::Display,
         {
             self.staccato = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staccato: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staccato: {}", e));
             self
         }
         pub fn stress<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsStress>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsStress>>,
             T::Error: ::std::fmt::Display,
         {
             self.stress = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for stress: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for stress: {}", e));
             self
         }
         pub fn strong_accent<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsStrongAccent>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsStrongAccent>>,
             T::Error: ::std::fmt::Display,
         {
             self.strong_accent = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for strong_accent: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for strong_accent: {}", e));
             self
         }
         pub fn tenuto<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsTenuto>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsTenuto>>,
             T::Error: ::std::fmt::Display,
         {
             self.tenuto = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for tenuto: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for tenuto: {}", e));
             self
         }
         pub fn tremolo<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsTremolo>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsTremolo>>,
             T::Error: ::std::fmt::Display,
         {
             self.tremolo = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for tremolo: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for tremolo: {}", e));
             self
         }
         pub fn unstress<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventMarkingsUnstress>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventMarkingsUnstress>>,
             T::Error: ::std::fmt::Display,
         {
             self.unstress = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for unstress: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for unstress: {}", e));
             self
         }
     }
@@ -9094,10 +8845,8 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct EventMarkingsAccent {
-        pointing: ::std::result::Result<
-            ::std::option::Option<super::UpOrDown>,
-            ::std::string::String,
-        >,
+        pointing:
+            ::std::result::Result<::std::option::Option<super::UpOrDown>, ::std::string::String>,
     }
     impl ::std::default::Default for EventMarkingsAccent {
         fn default() -> Self {
@@ -9114,9 +8863,7 @@ pub mod builder {
         {
             self.pointing = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for pointing: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for pointing: {}", e));
             self
         }
     }
@@ -9125,7 +8872,9 @@ pub mod builder {
         fn try_from(
             value: EventMarkingsAccent,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { pointing: value.pointing? })
+            Ok(Self {
+                pointing: value.pointing?,
+            })
         }
     }
     impl ::std::convert::From<super::EventMarkingsAccent> for EventMarkingsAccent {
@@ -9157,9 +8906,7 @@ pub mod builder {
         {
             self.symbol = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for symbol: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for symbol: {}", e));
             self
         }
     }
@@ -9168,12 +8915,16 @@ pub mod builder {
         fn try_from(
             value: EventMarkingsBreath,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { symbol: value.symbol? })
+            Ok(Self {
+                symbol: value.symbol?,
+            })
         }
     }
     impl ::std::convert::From<super::EventMarkingsBreath> for EventMarkingsBreath {
         fn from(value: super::EventMarkingsBreath) -> Self {
-            Self { symbol: Ok(value.symbol) }
+            Self {
+                symbol: Ok(value.symbol),
+            }
         }
     }
     #[derive(Clone, Debug)]
@@ -9184,8 +8935,7 @@ pub mod builder {
         }
     }
     impl EventMarkingsSoftAccent {}
-    impl ::std::convert::TryFrom<EventMarkingsSoftAccent>
-    for super::EventMarkingsSoftAccent {
+    impl ::std::convert::TryFrom<EventMarkingsSoftAccent> for super::EventMarkingsSoftAccent {
         type Error = super::error::ConversionError;
         fn try_from(
             _value: EventMarkingsSoftAccent,
@@ -9193,8 +8943,7 @@ pub mod builder {
             Ok(Self {})
         }
     }
-    impl ::std::convert::From<super::EventMarkingsSoftAccent>
-    for EventMarkingsSoftAccent {
+    impl ::std::convert::From<super::EventMarkingsSoftAccent> for EventMarkingsSoftAccent {
         fn from(_value: super::EventMarkingsSoftAccent) -> Self {
             Self {}
         }
@@ -9207,8 +8956,7 @@ pub mod builder {
         }
     }
     impl EventMarkingsSpiccato {}
-    impl ::std::convert::TryFrom<EventMarkingsSpiccato>
-    for super::EventMarkingsSpiccato {
+    impl ::std::convert::TryFrom<EventMarkingsSpiccato> for super::EventMarkingsSpiccato {
         type Error = super::error::ConversionError;
         fn try_from(
             _value: EventMarkingsSpiccato,
@@ -9229,8 +8977,7 @@ pub mod builder {
         }
     }
     impl EventMarkingsStaccatissimo {}
-    impl ::std::convert::TryFrom<EventMarkingsStaccatissimo>
-    for super::EventMarkingsStaccatissimo {
+    impl ::std::convert::TryFrom<EventMarkingsStaccatissimo> for super::EventMarkingsStaccatissimo {
         type Error = super::error::ConversionError;
         fn try_from(
             _value: EventMarkingsStaccatissimo,
@@ -9238,8 +8985,7 @@ pub mod builder {
             Ok(Self {})
         }
     }
-    impl ::std::convert::From<super::EventMarkingsStaccatissimo>
-    for EventMarkingsStaccatissimo {
+    impl ::std::convert::From<super::EventMarkingsStaccatissimo> for EventMarkingsStaccatissimo {
         fn from(_value: super::EventMarkingsStaccatissimo) -> Self {
             Self {}
         }
@@ -9252,8 +8998,7 @@ pub mod builder {
         }
     }
     impl EventMarkingsStaccato {}
-    impl ::std::convert::TryFrom<EventMarkingsStaccato>
-    for super::EventMarkingsStaccato {
+    impl ::std::convert::TryFrom<EventMarkingsStaccato> for super::EventMarkingsStaccato {
         type Error = super::error::ConversionError;
         fn try_from(
             _value: EventMarkingsStaccato,
@@ -9289,10 +9034,8 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct EventMarkingsStrongAccent {
-        pointing: ::std::result::Result<
-            ::std::option::Option<super::UpOrDown>,
-            ::std::string::String,
-        >,
+        pointing:
+            ::std::result::Result<::std::option::Option<super::UpOrDown>, ::std::string::String>,
     }
     impl ::std::default::Default for EventMarkingsStrongAccent {
         fn default() -> Self {
@@ -9309,23 +9052,21 @@ pub mod builder {
         {
             self.pointing = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for pointing: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for pointing: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<EventMarkingsStrongAccent>
-    for super::EventMarkingsStrongAccent {
+    impl ::std::convert::TryFrom<EventMarkingsStrongAccent> for super::EventMarkingsStrongAccent {
         type Error = super::error::ConversionError;
         fn try_from(
             value: EventMarkingsStrongAccent,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { pointing: value.pointing? })
+            Ok(Self {
+                pointing: value.pointing?,
+            })
         }
     }
-    impl ::std::convert::From<super::EventMarkingsStrongAccent>
-    for EventMarkingsStrongAccent {
+    impl ::std::convert::From<super::EventMarkingsStrongAccent> for EventMarkingsStrongAccent {
         fn from(value: super::EventMarkingsStrongAccent) -> Self {
             Self {
                 pointing: Ok(value.pointing),
@@ -9372,9 +9113,7 @@ pub mod builder {
         {
             self.marks = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for marks: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for marks: {}", e));
             self
         }
     }
@@ -9383,12 +9122,16 @@ pub mod builder {
         fn try_from(
             value: EventMarkingsTremolo,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { marks: value.marks? })
+            Ok(Self {
+                marks: value.marks?,
+            })
         }
     }
     impl ::std::convert::From<super::EventMarkingsTremolo> for EventMarkingsTremolo {
         fn from(value: super::EventMarkingsTremolo) -> Self {
-            Self { marks: Ok(value.marks) }
+            Self {
+                marks: Ok(value.marks),
+            }
         }
     }
     #[derive(Clone, Debug)]
@@ -9399,8 +9142,7 @@ pub mod builder {
         }
     }
     impl EventMarkingsUnstress {}
-    impl ::std::convert::TryFrom<EventMarkingsUnstress>
-    for super::EventMarkingsUnstress {
+    impl ::std::convert::TryFrom<EventMarkingsUnstress> for super::EventMarkingsUnstress {
         type Error = super::error::ConversionError;
         fn try_from(
             _value: EventMarkingsUnstress,
@@ -9419,27 +9161,18 @@ pub mod builder {
             ::std::option::Option<super::EventNotesItemAccidentalDisplay>,
             ::std::string::String,
         >,
-        class: ::std::result::Result<
-            ::std::option::Option<super::StyleClass>,
-            ::std::string::String,
-        >,
-        id: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        class:
+            ::std::result::Result<::std::option::Option<super::StyleClass>, ::std::string::String>,
+        id: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
         perform: ::std::result::Result<
             ::std::option::Option<super::EventNotesItemPerform>,
             ::std::string::String,
         >,
         pitch: ::std::result::Result<super::EventNotesItemPitch, ::std::string::String>,
-        smufl_font: ::std::result::Result<
-            ::std::option::Option<super::SmuflFont>,
-            ::std::string::String,
-        >,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
+        smufl_font:
+            ::std::result::Result<::std::option::Option<super::SmuflFont>, ::std::string::String>,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
         ties: ::std::result::Result<
             ::std::vec::Vec<super::EventNotesItemTiesItem>,
             ::std::string::String,
@@ -9467,13 +9200,12 @@ pub mod builder {
             >,
             T::Error: ::std::fmt::Display,
         {
-            self.accidental_display = value
-                .try_into()
-                .map_err(|e| {
-                    format!(
-                        "error converting supplied value for accidental_display: {}", e
-                    )
-                });
+            self.accidental_display = value.try_into().map_err(|e| {
+                format!(
+                    "error converting supplied value for accidental_display: {}",
+                    e
+                )
+            });
             self
         }
         pub fn class<T>(mut self, value: T) -> Self
@@ -9483,9 +9215,7 @@ pub mod builder {
         {
             self.class = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for class: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for class: {}", e));
             self
         }
         pub fn id<T>(mut self, value: T) -> Self
@@ -9500,16 +9230,12 @@ pub mod builder {
         }
         pub fn perform<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventNotesItemPerform>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventNotesItemPerform>>,
             T::Error: ::std::fmt::Display,
         {
             self.perform = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for perform: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for perform: {}", e));
             self
         }
         pub fn pitch<T>(mut self, value: T) -> Self
@@ -9519,9 +9245,7 @@ pub mod builder {
         {
             self.pitch = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for pitch: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for pitch: {}", e));
             self
         }
         pub fn smufl_font<T>(mut self, value: T) -> Self
@@ -9531,9 +9255,7 @@ pub mod builder {
         {
             self.smufl_font = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for smufl_font: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for smufl_font: {}", e));
             self
         }
         pub fn staff<T>(mut self, value: T) -> Self
@@ -9543,9 +9265,7 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
         pub fn ties<T>(mut self, value: T) -> Self
@@ -9618,9 +9338,7 @@ pub mod builder {
         {
             self.enclosure = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for enclosure: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for enclosure: {}", e));
             self
         }
         pub fn force<T>(mut self, value: T) -> Self
@@ -9630,9 +9348,7 @@ pub mod builder {
         {
             self.force = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for force: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for force: {}", e));
             self
         }
         pub fn show<T>(mut self, value: T) -> Self
@@ -9647,7 +9363,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::TryFrom<EventNotesItemAccidentalDisplay>
-    for super::EventNotesItemAccidentalDisplay {
+        for super::EventNotesItemAccidentalDisplay
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: EventNotesItemAccidentalDisplay,
@@ -9660,7 +9377,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::EventNotesItemAccidentalDisplay>
-    for EventNotesItemAccidentalDisplay {
+        for EventNotesItemAccidentalDisplay
+    {
         fn from(value: super::EventNotesItemAccidentalDisplay) -> Self {
             Self {
                 enclosure: Ok(value.enclosure),
@@ -9686,32 +9404,34 @@ pub mod builder {
     impl EventNotesItemAccidentalDisplayEnclosure {
         pub fn symbol<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                super::EventNotesItemAccidentalDisplayEnclosureSymbol,
-            >,
+            T: ::std::convert::TryInto<super::EventNotesItemAccidentalDisplayEnclosureSymbol>,
             T::Error: ::std::fmt::Display,
         {
             self.symbol = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for symbol: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for symbol: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<EventNotesItemAccidentalDisplayEnclosure>
-    for super::EventNotesItemAccidentalDisplayEnclosure {
+        for super::EventNotesItemAccidentalDisplayEnclosure
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: EventNotesItemAccidentalDisplayEnclosure,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { symbol: value.symbol? })
+            Ok(Self {
+                symbol: value.symbol?,
+            })
         }
     }
     impl ::std::convert::From<super::EventNotesItemAccidentalDisplayEnclosure>
-    for EventNotesItemAccidentalDisplayEnclosure {
+        for EventNotesItemAccidentalDisplayEnclosure
+    {
         fn from(value: super::EventNotesItemAccidentalDisplayEnclosure) -> Self {
-            Self { symbol: Ok(value.symbol) }
+            Self {
+                symbol: Ok(value.symbol),
+            }
         }
     }
     #[derive(Clone, Debug)]
@@ -9722,8 +9442,7 @@ pub mod builder {
         }
     }
     impl EventNotesItemPerform {}
-    impl ::std::convert::TryFrom<EventNotesItemPerform>
-    for super::EventNotesItemPerform {
+    impl ::std::convert::TryFrom<EventNotesItemPerform> for super::EventNotesItemPerform {
         type Error = super::error::ConversionError;
         fn try_from(
             _value: EventNotesItemPerform,
@@ -9740,10 +9459,7 @@ pub mod builder {
     pub struct EventNotesItemPitch {
         alter: ::std::result::Result<::std::option::Option<i64>, ::std::string::String>,
         octave: ::std::result::Result<i64, ::std::string::String>,
-        step: ::std::result::Result<
-            super::EventNotesItemPitchStep,
-            ::std::string::String,
-        >,
+        step: ::std::result::Result<super::EventNotesItemPitchStep, ::std::string::String>,
     }
     impl ::std::default::Default for EventNotesItemPitch {
         fn default() -> Self {
@@ -9762,9 +9478,7 @@ pub mod builder {
         {
             self.alter = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for alter: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for alter: {}", e));
             self
         }
         pub fn octave<T>(mut self, value: T) -> Self
@@ -9774,9 +9488,7 @@ pub mod builder {
         {
             self.octave = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for octave: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for octave: {}", e));
             self
         }
         pub fn step<T>(mut self, value: T) -> Self
@@ -9814,14 +9526,8 @@ pub mod builder {
     #[derive(Clone, Debug)]
     pub struct EventNotesItemTiesItem {
         lv: ::std::result::Result<::std::option::Option<bool>, ::std::string::String>,
-        side: ::std::result::Result<
-            ::std::option::Option<super::SlurSide>,
-            ::std::string::String,
-        >,
-        target: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        side: ::std::result::Result<::std::option::Option<super::SlurSide>, ::std::string::String>,
+        target: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
     }
     impl ::std::default::Default for EventNotesItemTiesItem {
         fn default() -> Self {
@@ -9860,14 +9566,11 @@ pub mod builder {
         {
             self.target = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for target: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for target: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<EventNotesItemTiesItem>
-    for super::EventNotesItemTiesItem {
+    impl ::std::convert::TryFrom<EventNotesItemTiesItem> for super::EventNotesItemTiesItem {
         type Error = super::error::ConversionError;
         fn try_from(
             value: EventNotesItemTiesItem,
@@ -9910,9 +9613,7 @@ pub mod builder {
         {
             self.staff_position = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff_position: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff_position: {}", e));
             self
         }
     }
@@ -9935,26 +9636,15 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct EventSlursItem {
-        end_note: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        end_note: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
         line_type: ::std::result::Result<
             ::std::option::Option<super::EventSlursItemLineType>,
             ::std::string::String,
         >,
-        side: ::std::result::Result<
-            ::std::option::Option<super::SlurSide>,
-            ::std::string::String,
-        >,
-        side_end: ::std::result::Result<
-            ::std::option::Option<super::SlurSide>,
-            ::std::string::String,
-        >,
-        start_note: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        side: ::std::result::Result<::std::option::Option<super::SlurSide>, ::std::string::String>,
+        side_end:
+            ::std::result::Result<::std::option::Option<super::SlurSide>, ::std::string::String>,
+        start_note: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
         target: ::std::result::Result<super::Id, ::std::string::String>,
     }
     impl ::std::default::Default for EventSlursItem {
@@ -9977,23 +9667,17 @@ pub mod builder {
         {
             self.end_note = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for end_note: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for end_note: {}", e));
             self
         }
         pub fn line_type<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::EventSlursItemLineType>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::EventSlursItemLineType>>,
             T::Error: ::std::fmt::Display,
         {
             self.line_type = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for line_type: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for line_type: {}", e));
             self
         }
         pub fn side<T>(mut self, value: T) -> Self
@@ -10013,9 +9697,7 @@ pub mod builder {
         {
             self.side_end = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for side_end: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for side_end: {}", e));
             self
         }
         pub fn start_note<T>(mut self, value: T) -> Self
@@ -10025,9 +9707,7 @@ pub mod builder {
         {
             self.start_note = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for start_note: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for start_note: {}", e));
             self
         }
         pub fn target<T>(mut self, value: T) -> Self
@@ -10037,9 +9717,7 @@ pub mod builder {
         {
             self.target = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for target: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for target: {}", e));
             self
         }
     }
@@ -10091,9 +9769,7 @@ pub mod builder {
         {
             self.measure = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for measure: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for measure: {}", e));
             self
         }
         pub fn position<T>(mut self, value: T) -> Self
@@ -10103,14 +9779,11 @@ pub mod builder {
         {
             self.position = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for position: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for position: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<MeasureRhythmicPosition>
-    for super::MeasureRhythmicPosition {
+    impl ::std::convert::TryFrom<MeasureRhythmicPosition> for super::MeasureRhythmicPosition {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MeasureRhythmicPosition,
@@ -10121,8 +9794,7 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<super::MeasureRhythmicPosition>
-    for MeasureRhythmicPosition {
+    impl ::std::convert::From<super::MeasureRhythmicPosition> for MeasureRhythmicPosition {
         fn from(value: super::MeasureRhythmicPosition) -> Self {
             Self {
                 measure: Ok(value.measure),
@@ -10166,9 +9838,7 @@ pub mod builder {
         {
             self.global = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for global: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for global: {}", e));
             self
         }
         pub fn layouts<T>(mut self, value: T) -> Self
@@ -10178,9 +9848,7 @@ pub mod builder {
         {
             self.layouts = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for layouts: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for layouts: {}", e));
             self
         }
         pub fn mnx<T>(mut self, value: T) -> Self
@@ -10200,9 +9868,7 @@ pub mod builder {
         {
             self.parts = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for parts: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for parts: {}", e));
             self
         }
         pub fn scores<T>(mut self, value: T) -> Self
@@ -10212,9 +9878,7 @@ pub mod builder {
         {
             self.scores = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for scores: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for scores: {}", e));
             self
         }
     }
@@ -10270,44 +9934,32 @@ pub mod builder {
     impl MnxDocumentGlobal {
         pub fn lyrics<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::MnxDocumentGlobalLyrics>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::MnxDocumentGlobalLyrics>>,
             T::Error: ::std::fmt::Display,
         {
             self.lyrics = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for lyrics: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for lyrics: {}", e));
             self
         }
         pub fn measures<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::vec::Vec<super::MnxDocumentGlobalMeasuresItem>,
-            >,
+            T: ::std::convert::TryInto<::std::vec::Vec<super::MnxDocumentGlobalMeasuresItem>>,
             T::Error: ::std::fmt::Display,
         {
             self.measures = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for measures: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for measures: {}", e));
             self
         }
         pub fn styles<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::vec::Vec<super::MnxDocumentGlobalStylesItem>,
-            >,
+            T: ::std::convert::TryInto<::std::vec::Vec<super::MnxDocumentGlobalStylesItem>>,
             T::Error: ::std::fmt::Display,
         {
             self.styles = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for styles: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for styles: {}", e));
             self
         }
     }
@@ -10341,10 +9993,8 @@ pub mod builder {
             >,
             ::std::string::String,
         >,
-        line_order: ::std::result::Result<
-            ::std::vec::Vec<::std::string::String>,
-            ::std::string::String,
-        >,
+        line_order:
+            ::std::result::Result<::std::vec::Vec<::std::string::String>, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentGlobalLyrics {
         fn default() -> Self {
@@ -10367,9 +10017,7 @@ pub mod builder {
         {
             self.line_metadata = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for line_metadata: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for line_metadata: {}", e));
             self
         }
         pub fn line_order<T>(mut self, value: T) -> Self
@@ -10379,14 +10027,11 @@ pub mod builder {
         {
             self.line_order = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for line_order: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for line_order: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<MnxDocumentGlobalLyrics>
-    for super::MnxDocumentGlobalLyrics {
+    impl ::std::convert::TryFrom<MnxDocumentGlobalLyrics> for super::MnxDocumentGlobalLyrics {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalLyrics,
@@ -10397,8 +10042,7 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<super::MnxDocumentGlobalLyrics>
-    for MnxDocumentGlobalLyrics {
+    impl ::std::convert::From<super::MnxDocumentGlobalLyrics> for MnxDocumentGlobalLyrics {
         fn from(value: super::MnxDocumentGlobalLyrics) -> Self {
             Self {
                 line_metadata: Ok(value.line_metadata),
@@ -10433,9 +10077,7 @@ pub mod builder {
         {
             self.label = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for label: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for label: {}", e));
             self
         }
         pub fn lang<T>(mut self, value: T) -> Self
@@ -10450,7 +10092,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalLyricsLineMetadataValue>
-    for super::MnxDocumentGlobalLyricsLineMetadataValue {
+        for super::MnxDocumentGlobalLyricsLineMetadataValue
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalLyricsLineMetadataValue,
@@ -10462,7 +10105,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalLyricsLineMetadataValue>
-    for MnxDocumentGlobalLyricsLineMetadataValue {
+        for MnxDocumentGlobalLyricsLineMetadataValue
+    {
         fn from(value: super::MnxDocumentGlobalLyricsLineMetadataValue) -> Self {
             Self {
                 label: Ok(value.label),
@@ -10549,9 +10193,7 @@ pub mod builder {
         {
             self.barline = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for barline: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for barline: {}", e));
             self
         }
         pub fn ending<T>(mut self, value: T) -> Self
@@ -10563,9 +10205,7 @@ pub mod builder {
         {
             self.ending = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for ending: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for ending: {}", e));
             self
         }
         pub fn fine<T>(mut self, value: T) -> Self
@@ -10587,9 +10227,7 @@ pub mod builder {
         {
             self.index = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for index: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for index: {}", e));
             self
         }
         pub fn jump<T>(mut self, value: T) -> Self
@@ -10623,9 +10261,7 @@ pub mod builder {
         {
             self.number = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for number: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for number: {}", e));
             self
         }
         pub fn repeat_end<T>(mut self, value: T) -> Self
@@ -10637,9 +10273,7 @@ pub mod builder {
         {
             self.repeat_end = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for repeat_end: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for repeat_end: {}", e));
             self
         }
         pub fn repeat_start<T>(mut self, value: T) -> Self
@@ -10651,9 +10285,7 @@ pub mod builder {
         {
             self.repeat_start = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for repeat_start: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for repeat_start: {}", e));
             self
         }
         pub fn segno<T>(mut self, value: T) -> Self
@@ -10665,9 +10297,7 @@ pub mod builder {
         {
             self.segno = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for segno: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for segno: {}", e));
             self
         }
         pub fn tempos<T>(mut self, value: T) -> Self
@@ -10679,9 +10309,7 @@ pub mod builder {
         {
             self.tempos = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for tempos: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for tempos: {}", e));
             self
         }
         pub fn time<T>(mut self, value: T) -> Self
@@ -10698,7 +10326,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItem>
-    for super::MnxDocumentGlobalMeasuresItem {
+        for super::MnxDocumentGlobalMeasuresItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItem,
@@ -10719,8 +10348,7 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItem>
-    for MnxDocumentGlobalMeasuresItem {
+    impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItem> for MnxDocumentGlobalMeasuresItem {
         fn from(value: super::MnxDocumentGlobalMeasuresItem) -> Self {
             Self {
                 barline: Ok(value.barline),
@@ -10760,37 +10388,36 @@ pub mod builder {
         {
             self.type_ = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for type_: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for type_: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemBarline>
-    for super::MnxDocumentGlobalMeasuresItemBarline {
+        for super::MnxDocumentGlobalMeasuresItemBarline
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemBarline,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { type_: value.type_? })
+            Ok(Self {
+                type_: value.type_?,
+            })
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemBarline>
-    for MnxDocumentGlobalMeasuresItemBarline {
+        for MnxDocumentGlobalMeasuresItemBarline
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemBarline) -> Self {
-            Self { type_: Ok(value.type_) }
+            Self {
+                type_: Ok(value.type_),
+            }
         }
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentGlobalMeasuresItemEnding {
-        class: ::std::result::Result<
-            ::std::option::Option<super::StyleClass>,
-            ::std::string::String,
-        >,
-        color: ::std::result::Result<
-            ::std::option::Option<super::Color>,
-            ::std::string::String,
-        >,
+        class:
+            ::std::result::Result<::std::option::Option<super::StyleClass>, ::std::string::String>,
+        color: ::std::result::Result<::std::option::Option<super::Color>, ::std::string::String>,
         duration: ::std::result::Result<i64, ::std::string::String>,
         numbers: ::std::result::Result<::std::vec::Vec<i64>, ::std::string::String>,
         open: ::std::result::Result<::std::option::Option<bool>, ::std::string::String>,
@@ -10814,9 +10441,7 @@ pub mod builder {
         {
             self.class = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for class: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for class: {}", e));
             self
         }
         pub fn color<T>(mut self, value: T) -> Self
@@ -10826,9 +10451,7 @@ pub mod builder {
         {
             self.color = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for color: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for color: {}", e));
             self
         }
         pub fn duration<T>(mut self, value: T) -> Self
@@ -10838,9 +10461,7 @@ pub mod builder {
         {
             self.duration = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for duration: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for duration: {}", e));
             self
         }
         pub fn numbers<T>(mut self, value: T) -> Self
@@ -10850,9 +10471,7 @@ pub mod builder {
         {
             self.numbers = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for numbers: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for numbers: {}", e));
             self
         }
         pub fn open<T>(mut self, value: T) -> Self
@@ -10867,7 +10486,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemEnding>
-    for super::MnxDocumentGlobalMeasuresItemEnding {
+        for super::MnxDocumentGlobalMeasuresItemEnding
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemEnding,
@@ -10882,7 +10502,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemEnding>
-    for MnxDocumentGlobalMeasuresItemEnding {
+        for MnxDocumentGlobalMeasuresItemEnding
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemEnding) -> Self {
             Self {
                 class: Ok(value.class),
@@ -10895,14 +10516,9 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentGlobalMeasuresItemFine {
-        class: ::std::result::Result<
-            ::std::option::Option<super::StyleClass>,
-            ::std::string::String,
-        >,
-        color: ::std::result::Result<
-            ::std::option::Option<super::Color>,
-            ::std::string::String,
-        >,
+        class:
+            ::std::result::Result<::std::option::Option<super::StyleClass>, ::std::string::String>,
+        color: ::std::result::Result<::std::option::Option<super::Color>, ::std::string::String>,
         location: ::std::result::Result<super::RhythmicPosition, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentGlobalMeasuresItemFine {
@@ -10922,9 +10538,7 @@ pub mod builder {
         {
             self.class = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for class: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for class: {}", e));
             self
         }
         pub fn color<T>(mut self, value: T) -> Self
@@ -10934,9 +10548,7 @@ pub mod builder {
         {
             self.color = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for color: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for color: {}", e));
             self
         }
         pub fn location<T>(mut self, value: T) -> Self
@@ -10946,14 +10558,13 @@ pub mod builder {
         {
             self.location = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for location: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for location: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemFine>
-    for super::MnxDocumentGlobalMeasuresItemFine {
+        for super::MnxDocumentGlobalMeasuresItemFine
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemFine,
@@ -10966,7 +10577,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemFine>
-    for MnxDocumentGlobalMeasuresItemFine {
+        for MnxDocumentGlobalMeasuresItemFine
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemFine) -> Self {
             Self {
                 class: Ok(value.class),
@@ -10999,9 +10611,7 @@ pub mod builder {
         {
             self.location = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for location: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for location: {}", e));
             self
         }
         pub fn type_<T>(mut self, value: T) -> Self
@@ -11011,14 +10621,13 @@ pub mod builder {
         {
             self.type_ = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for type_: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for type_: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemJump>
-    for super::MnxDocumentGlobalMeasuresItemJump {
+        for super::MnxDocumentGlobalMeasuresItemJump
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemJump,
@@ -11030,7 +10639,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemJump>
-    for MnxDocumentGlobalMeasuresItemJump {
+        for MnxDocumentGlobalMeasuresItemJump
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemJump) -> Self {
             Self {
                 location: Ok(value.location),
@@ -11040,14 +10650,9 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentGlobalMeasuresItemKey {
-        class: ::std::result::Result<
-            ::std::option::Option<super::StyleClass>,
-            ::std::string::String,
-        >,
-        color: ::std::result::Result<
-            ::std::option::Option<super::Color>,
-            ::std::string::String,
-        >,
+        class:
+            ::std::result::Result<::std::option::Option<super::StyleClass>, ::std::string::String>,
+        color: ::std::result::Result<::std::option::Option<super::Color>, ::std::string::String>,
         fifths: ::std::result::Result<i64, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentGlobalMeasuresItemKey {
@@ -11067,9 +10672,7 @@ pub mod builder {
         {
             self.class = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for class: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for class: {}", e));
             self
         }
         pub fn color<T>(mut self, value: T) -> Self
@@ -11079,9 +10682,7 @@ pub mod builder {
         {
             self.color = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for color: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for color: {}", e));
             self
         }
         pub fn fifths<T>(mut self, value: T) -> Self
@@ -11091,14 +10692,13 @@ pub mod builder {
         {
             self.fifths = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for fifths: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for fifths: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemKey>
-    for super::MnxDocumentGlobalMeasuresItemKey {
+        for super::MnxDocumentGlobalMeasuresItemKey
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemKey,
@@ -11111,7 +10711,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemKey>
-    for MnxDocumentGlobalMeasuresItemKey {
+        for MnxDocumentGlobalMeasuresItemKey
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemKey) -> Self {
             Self {
                 class: Ok(value.class),
@@ -11139,25 +10740,29 @@ pub mod builder {
         {
             self.times = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for times: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for times: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemRepeatEnd>
-    for super::MnxDocumentGlobalMeasuresItemRepeatEnd {
+        for super::MnxDocumentGlobalMeasuresItemRepeatEnd
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemRepeatEnd,
         ) -> ::std::result::Result<Self, super::error::ConversionError> {
-            Ok(Self { times: value.times? })
+            Ok(Self {
+                times: value.times?,
+            })
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemRepeatEnd>
-    for MnxDocumentGlobalMeasuresItemRepeatEnd {
+        for MnxDocumentGlobalMeasuresItemRepeatEnd
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemRepeatEnd) -> Self {
-            Self { times: Ok(value.times) }
+            Self {
+                times: Ok(value.times),
+            }
         }
     }
     #[derive(Clone, Debug)]
@@ -11169,7 +10774,8 @@ pub mod builder {
     }
     impl MnxDocumentGlobalMeasuresItemRepeatStart {}
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemRepeatStart>
-    for super::MnxDocumentGlobalMeasuresItemRepeatStart {
+        for super::MnxDocumentGlobalMeasuresItemRepeatStart
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             _value: MnxDocumentGlobalMeasuresItemRepeatStart,
@@ -11178,25 +10784,19 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemRepeatStart>
-    for MnxDocumentGlobalMeasuresItemRepeatStart {
+        for MnxDocumentGlobalMeasuresItemRepeatStart
+    {
         fn from(_value: super::MnxDocumentGlobalMeasuresItemRepeatStart) -> Self {
             Self {}
         }
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentGlobalMeasuresItemSegno {
-        class: ::std::result::Result<
-            ::std::option::Option<super::StyleClass>,
-            ::std::string::String,
-        >,
-        color: ::std::result::Result<
-            ::std::option::Option<super::Color>,
-            ::std::string::String,
-        >,
-        glyph: ::std::result::Result<
-            ::std::option::Option<super::SmuflGlyph>,
-            ::std::string::String,
-        >,
+        class:
+            ::std::result::Result<::std::option::Option<super::StyleClass>, ::std::string::String>,
+        color: ::std::result::Result<::std::option::Option<super::Color>, ::std::string::String>,
+        glyph:
+            ::std::result::Result<::std::option::Option<super::SmuflGlyph>, ::std::string::String>,
         location: ::std::result::Result<super::RhythmicPosition, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentGlobalMeasuresItemSegno {
@@ -11217,9 +10817,7 @@ pub mod builder {
         {
             self.class = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for class: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for class: {}", e));
             self
         }
         pub fn color<T>(mut self, value: T) -> Self
@@ -11229,9 +10827,7 @@ pub mod builder {
         {
             self.color = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for color: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for color: {}", e));
             self
         }
         pub fn glyph<T>(mut self, value: T) -> Self
@@ -11241,9 +10837,7 @@ pub mod builder {
         {
             self.glyph = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for glyph: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for glyph: {}", e));
             self
         }
         pub fn location<T>(mut self, value: T) -> Self
@@ -11253,14 +10847,13 @@ pub mod builder {
         {
             self.location = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for location: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for location: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemSegno>
-    for super::MnxDocumentGlobalMeasuresItemSegno {
+        for super::MnxDocumentGlobalMeasuresItemSegno
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemSegno,
@@ -11274,7 +10867,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemSegno>
-    for MnxDocumentGlobalMeasuresItemSegno {
+        for MnxDocumentGlobalMeasuresItemSegno
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemSegno) -> Self {
             Self {
                 class: Ok(value.class),
@@ -11320,9 +10914,7 @@ pub mod builder {
         {
             self.location = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for location: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for location: {}", e));
             self
         }
         pub fn value<T>(mut self, value: T) -> Self
@@ -11332,14 +10924,13 @@ pub mod builder {
         {
             self.value = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for value: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for value: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemTemposItem>
-    for super::MnxDocumentGlobalMeasuresItemTemposItem {
+        for super::MnxDocumentGlobalMeasuresItemTemposItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemTemposItem,
@@ -11352,7 +10943,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemTemposItem>
-    for MnxDocumentGlobalMeasuresItemTemposItem {
+        for MnxDocumentGlobalMeasuresItemTemposItem
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemTemposItem) -> Self {
             Self {
                 bpm: Ok(value.bpm),
@@ -11385,9 +10977,7 @@ pub mod builder {
         {
             self.count = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for count: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for count: {}", e));
             self
         }
         pub fn unit<T>(mut self, value: T) -> Self
@@ -11402,7 +10992,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentGlobalMeasuresItemTime>
-    for super::MnxDocumentGlobalMeasuresItemTime {
+        for super::MnxDocumentGlobalMeasuresItemTime
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalMeasuresItemTime,
@@ -11414,7 +11005,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentGlobalMeasuresItemTime>
-    for MnxDocumentGlobalMeasuresItemTime {
+        for MnxDocumentGlobalMeasuresItemTime
+    {
         fn from(value: super::MnxDocumentGlobalMeasuresItemTime) -> Self {
             Self {
                 count: Ok(value.count),
@@ -11424,10 +11016,7 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentGlobalStylesItem {
-        color: ::std::result::Result<
-            ::std::option::Option<super::Color>,
-            ::std::string::String,
-        >,
+        color: ::std::result::Result<::std::option::Option<super::Color>, ::std::string::String>,
         selector: ::std::result::Result<::std::string::String, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentGlobalStylesItem {
@@ -11446,9 +11035,7 @@ pub mod builder {
         {
             self.color = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for color: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for color: {}", e));
             self
         }
         pub fn selector<T>(mut self, value: T) -> Self
@@ -11458,14 +11045,11 @@ pub mod builder {
         {
             self.selector = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for selector: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for selector: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<MnxDocumentGlobalStylesItem>
-    for super::MnxDocumentGlobalStylesItem {
+    impl ::std::convert::TryFrom<MnxDocumentGlobalStylesItem> for super::MnxDocumentGlobalStylesItem {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentGlobalStylesItem,
@@ -11476,8 +11060,7 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<super::MnxDocumentGlobalStylesItem>
-    for MnxDocumentGlobalStylesItem {
+    impl ::std::convert::From<super::MnxDocumentGlobalStylesItem> for MnxDocumentGlobalStylesItem {
         fn from(value: super::MnxDocumentGlobalStylesItem) -> Self {
             Self {
                 color: Ok(value.color),
@@ -11487,10 +11070,7 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentLayoutsItem {
-        content: ::std::result::Result<
-            super::SystemLayoutContent,
-            ::std::string::String,
-        >,
+        content: ::std::result::Result<super::SystemLayoutContent, ::std::string::String>,
         id: ::std::result::Result<super::Id, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentLayoutsItem {
@@ -11509,9 +11089,7 @@ pub mod builder {
         {
             self.content = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for content: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for content: {}", e));
             self
         }
         pub fn id<T>(mut self, value: T) -> Self
@@ -11525,8 +11103,7 @@ pub mod builder {
             self
         }
     }
-    impl ::std::convert::TryFrom<MnxDocumentLayoutsItem>
-    for super::MnxDocumentLayoutsItem {
+    impl ::std::convert::TryFrom<MnxDocumentLayoutsItem> for super::MnxDocumentLayoutsItem {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentLayoutsItem,
@@ -11564,16 +11141,12 @@ pub mod builder {
     impl MnxDocumentMnx {
         pub fn support<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::MnxDocumentMnxSupport>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::MnxDocumentMnxSupport>>,
             T::Error: ::std::fmt::Display,
         {
             self.support = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for support: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for support: {}", e));
             self
         }
         pub fn version<T>(mut self, value: T) -> Self
@@ -11583,9 +11156,7 @@ pub mod builder {
         {
             self.version = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for version: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for version: {}", e));
             self
         }
     }
@@ -11610,10 +11181,8 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentMnxSupport {
-        use_accidental_display: ::std::result::Result<
-            ::std::option::Option<bool>,
-            ::std::string::String,
-        >,
+        use_accidental_display:
+            ::std::result::Result<::std::option::Option<bool>, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentMnxSupport {
         fn default() -> Self {
@@ -11628,19 +11197,16 @@ pub mod builder {
             T: ::std::convert::TryInto<::std::option::Option<bool>>,
             T::Error: ::std::fmt::Display,
         {
-            self.use_accidental_display = value
-                .try_into()
-                .map_err(|e| {
-                    format!(
-                        "error converting supplied value for use_accidental_display: {}",
-                        e
-                    )
-                });
+            self.use_accidental_display = value.try_into().map_err(|e| {
+                format!(
+                    "error converting supplied value for use_accidental_display: {}",
+                    e
+                )
+            });
             self
         }
     }
-    impl ::std::convert::TryFrom<MnxDocumentMnxSupport>
-    for super::MnxDocumentMnxSupport {
+    impl ::std::convert::TryFrom<MnxDocumentMnxSupport> for super::MnxDocumentMnxSupport {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentMnxSupport,
@@ -11659,10 +11225,7 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentPartsItem {
-        id: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        id: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
         measures: ::std::result::Result<
             ::std::vec::Vec<super::MnxDocumentPartsItemMeasuresItem>,
             ::std::string::String,
@@ -11675,10 +11238,8 @@ pub mod builder {
             ::std::option::Option<::std::string::String>,
             ::std::string::String,
         >,
-        smufl_font: ::std::result::Result<
-            ::std::option::Option<super::SmuflFont>,
-            ::std::string::String,
-        >,
+        smufl_font:
+            ::std::result::Result<::std::option::Option<super::SmuflFont>, ::std::string::String>,
         staves: ::std::result::Result<::std::option::Option<i64>, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentPartsItem {
@@ -11706,16 +11267,12 @@ pub mod builder {
         }
         pub fn measures<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::vec::Vec<super::MnxDocumentPartsItemMeasuresItem>,
-            >,
+            T: ::std::convert::TryInto<::std::vec::Vec<super::MnxDocumentPartsItemMeasuresItem>>,
             T::Error: ::std::fmt::Display,
         {
             self.measures = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for measures: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for measures: {}", e));
             self
         }
         pub fn name<T>(mut self, value: T) -> Self
@@ -11735,9 +11292,7 @@ pub mod builder {
         {
             self.short_name = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for short_name: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for short_name: {}", e));
             self
         }
         pub fn smufl_font<T>(mut self, value: T) -> Self
@@ -11747,9 +11302,7 @@ pub mod builder {
         {
             self.smufl_font = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for smufl_font: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for smufl_font: {}", e));
             self
         }
         pub fn staves<T>(mut self, value: T) -> Self
@@ -11759,9 +11312,7 @@ pub mod builder {
         {
             self.staves = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staves: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staves: {}", e));
             self
         }
     }
@@ -11794,10 +11345,7 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentPartsItemMeasuresItem {
-        beams: ::std::result::Result<
-            ::std::option::Option<super::BeamList>,
-            ::std::string::String,
-        >,
+        beams: ::std::result::Result<::std::option::Option<super::BeamList>, ::std::string::String>,
         clefs: ::std::result::Result<
             ::std::vec::Vec<super::MnxDocumentPartsItemMeasuresItemClefsItem>,
             ::std::string::String,
@@ -11834,9 +11382,7 @@ pub mod builder {
         {
             self.beams = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for beams: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for beams: {}", e));
             self
         }
         pub fn clefs<T>(mut self, value: T) -> Self
@@ -11848,9 +11394,7 @@ pub mod builder {
         {
             self.clefs = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for clefs: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for clefs: {}", e));
             self
         }
         pub fn dynamics<T>(mut self, value: T) -> Self
@@ -11862,9 +11406,7 @@ pub mod builder {
         {
             self.dynamics = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for dynamics: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for dynamics: {}", e));
             self
         }
         pub fn ottavas<T>(mut self, value: T) -> Self
@@ -11876,9 +11418,7 @@ pub mod builder {
         {
             self.ottavas = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for ottavas: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for ottavas: {}", e));
             self
         }
         pub fn sequences<T>(mut self, value: T) -> Self
@@ -11890,14 +11430,13 @@ pub mod builder {
         {
             self.sequences = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for sequences: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for sequences: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentPartsItemMeasuresItem>
-    for super::MnxDocumentPartsItemMeasuresItem {
+        for super::MnxDocumentPartsItemMeasuresItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentPartsItemMeasuresItem,
@@ -11912,7 +11451,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentPartsItemMeasuresItem>
-    for MnxDocumentPartsItemMeasuresItem {
+        for MnxDocumentPartsItemMeasuresItem
+    {
         fn from(value: super::MnxDocumentPartsItemMeasuresItem) -> Self {
             Self {
                 beams: Ok(value.beams),
@@ -11933,10 +11473,8 @@ pub mod builder {
             ::std::option::Option<super::RhythmicPosition>,
             ::std::string::String,
         >,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentPartsItemMeasuresItemClefsItem {
         fn default() -> Self {
@@ -11950,9 +11488,7 @@ pub mod builder {
     impl MnxDocumentPartsItemMeasuresItemClefsItem {
         pub fn clef<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                super::MnxDocumentPartsItemMeasuresItemClefsItemClef,
-            >,
+            T: ::std::convert::TryInto<super::MnxDocumentPartsItemMeasuresItemClefsItemClef>,
             T::Error: ::std::fmt::Display,
         {
             self.clef = value
@@ -11967,9 +11503,7 @@ pub mod builder {
         {
             self.position = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for position: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for position: {}", e));
             self
         }
         pub fn staff<T>(mut self, value: T) -> Self
@@ -11979,14 +11513,13 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentPartsItemMeasuresItemClefsItem>
-    for super::MnxDocumentPartsItemMeasuresItemClefsItem {
+        for super::MnxDocumentPartsItemMeasuresItemClefsItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentPartsItemMeasuresItemClefsItem,
@@ -11999,7 +11532,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentPartsItemMeasuresItemClefsItem>
-    for MnxDocumentPartsItemMeasuresItemClefsItem {
+        for MnxDocumentPartsItemMeasuresItemClefsItem
+    {
         fn from(value: super::MnxDocumentPartsItemMeasuresItemClefsItem) -> Self {
             Self {
                 clef: Ok(value.clef),
@@ -12010,27 +11544,20 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentPartsItemMeasuresItemClefsItemClef {
-        class: ::std::result::Result<
-            ::std::option::Option<super::StyleClass>,
-            ::std::string::String,
-        >,
+        class:
+            ::std::result::Result<::std::option::Option<super::StyleClass>, ::std::string::String>,
         color: ::std::result::Result<
             ::std::option::Option<::std::string::String>,
             ::std::string::String,
         >,
-        glyph: ::std::result::Result<
-            ::std::option::Option<super::SmuflGlyph>,
-            ::std::string::String,
-        >,
+        glyph:
+            ::std::result::Result<::std::option::Option<super::SmuflGlyph>, ::std::string::String>,
         octave: ::std::result::Result<::std::option::Option<i64>, ::std::string::String>,
         sign: ::std::result::Result<
             super::MnxDocumentPartsItemMeasuresItemClefsItemClefSign,
             ::std::string::String,
         >,
-        staff_position: ::std::result::Result<
-            super::StaffPosition,
-            ::std::string::String,
-        >,
+        staff_position: ::std::result::Result<super::StaffPosition, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentPartsItemMeasuresItemClefsItemClef {
         fn default() -> Self {
@@ -12052,9 +11579,7 @@ pub mod builder {
         {
             self.class = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for class: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for class: {}", e));
             self
         }
         pub fn color<T>(mut self, value: T) -> Self
@@ -12064,9 +11589,7 @@ pub mod builder {
         {
             self.color = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for color: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for color: {}", e));
             self
         }
         pub fn glyph<T>(mut self, value: T) -> Self
@@ -12076,9 +11599,7 @@ pub mod builder {
         {
             self.glyph = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for glyph: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for glyph: {}", e));
             self
         }
         pub fn octave<T>(mut self, value: T) -> Self
@@ -12088,16 +11609,12 @@ pub mod builder {
         {
             self.octave = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for octave: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for octave: {}", e));
             self
         }
         pub fn sign<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                super::MnxDocumentPartsItemMeasuresItemClefsItemClefSign,
-            >,
+            T: ::std::convert::TryInto<super::MnxDocumentPartsItemMeasuresItemClefsItemClefSign>,
             T::Error: ::std::fmt::Display,
         {
             self.sign = value
@@ -12112,14 +11629,13 @@ pub mod builder {
         {
             self.staff_position = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff_position: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff_position: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentPartsItemMeasuresItemClefsItemClef>
-    for super::MnxDocumentPartsItemMeasuresItemClefsItemClef {
+        for super::MnxDocumentPartsItemMeasuresItemClefsItemClef
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentPartsItemMeasuresItemClefsItemClef,
@@ -12135,7 +11651,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentPartsItemMeasuresItemClefsItemClef>
-    for MnxDocumentPartsItemMeasuresItemClefsItemClef {
+        for MnxDocumentPartsItemMeasuresItemClefsItemClef
+    {
         fn from(value: super::MnxDocumentPartsItemMeasuresItemClefsItemClef) -> Self {
             Self {
                 class: Ok(value.class),
@@ -12149,20 +11666,14 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentPartsItemMeasuresItemDynamicsItem {
-        glyph: ::std::result::Result<
-            ::std::option::Option<super::SmuflGlyph>,
-            ::std::string::String,
-        >,
+        glyph:
+            ::std::result::Result<::std::option::Option<super::SmuflGlyph>, ::std::string::String>,
         position: ::std::result::Result<super::RhythmicPosition, ::std::string::String>,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
         value: ::std::result::Result<::std::string::String, ::std::string::String>,
-        voice: ::std::result::Result<
-            ::std::option::Option<super::VoiceName>,
-            ::std::string::String,
-        >,
+        voice:
+            ::std::result::Result<::std::option::Option<super::VoiceName>, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentPartsItemMeasuresItemDynamicsItem {
         fn default() -> Self {
@@ -12183,9 +11694,7 @@ pub mod builder {
         {
             self.glyph = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for glyph: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for glyph: {}", e));
             self
         }
         pub fn position<T>(mut self, value: T) -> Self
@@ -12195,9 +11704,7 @@ pub mod builder {
         {
             self.position = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for position: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for position: {}", e));
             self
         }
         pub fn staff<T>(mut self, value: T) -> Self
@@ -12207,9 +11714,7 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
         pub fn value<T>(mut self, value: T) -> Self
@@ -12219,9 +11724,7 @@ pub mod builder {
         {
             self.value = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for value: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for value: {}", e));
             self
         }
         pub fn voice<T>(mut self, value: T) -> Self
@@ -12231,14 +11734,13 @@ pub mod builder {
         {
             self.voice = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for voice: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for voice: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentPartsItemMeasuresItemDynamicsItem>
-    for super::MnxDocumentPartsItemMeasuresItemDynamicsItem {
+        for super::MnxDocumentPartsItemMeasuresItemDynamicsItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentPartsItemMeasuresItemDynamicsItem,
@@ -12253,7 +11755,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentPartsItemMeasuresItemDynamicsItem>
-    for MnxDocumentPartsItemMeasuresItemDynamicsItem {
+        for MnxDocumentPartsItemMeasuresItemDynamicsItem
+    {
         fn from(value: super::MnxDocumentPartsItemMeasuresItemDynamicsItem) -> Self {
             Self {
                 glyph: Ok(value.glyph),
@@ -12266,27 +11769,18 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentPartsItemMeasuresItemOttavasItem {
-        end: ::std::result::Result<
-            super::MeasureRhythmicPosition,
-            ::std::string::String,
-        >,
-        orient: ::std::result::Result<
-            ::std::option::Option<super::Orientation>,
-            ::std::string::String,
-        >,
+        end: ::std::result::Result<super::MeasureRhythmicPosition, ::std::string::String>,
+        orient:
+            ::std::result::Result<::std::option::Option<super::Orientation>, ::std::string::String>,
         position: ::std::result::Result<super::RhythmicPosition, ::std::string::String>,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
         value: ::std::result::Result<
             super::MnxDocumentPartsItemMeasuresItemOttavasItemValue,
             ::std::string::String,
         >,
-        voice: ::std::result::Result<
-            ::std::option::Option<super::VoiceName>,
-            ::std::string::String,
-        >,
+        voice:
+            ::std::result::Result<::std::option::Option<super::VoiceName>, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentPartsItemMeasuresItemOttavasItem {
         fn default() -> Self {
@@ -12318,9 +11812,7 @@ pub mod builder {
         {
             self.orient = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for orient: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for orient: {}", e));
             self
         }
         pub fn position<T>(mut self, value: T) -> Self
@@ -12330,9 +11822,7 @@ pub mod builder {
         {
             self.position = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for position: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for position: {}", e));
             self
         }
         pub fn staff<T>(mut self, value: T) -> Self
@@ -12342,23 +11832,17 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
         pub fn value<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                super::MnxDocumentPartsItemMeasuresItemOttavasItemValue,
-            >,
+            T: ::std::convert::TryInto<super::MnxDocumentPartsItemMeasuresItemOttavasItemValue>,
             T::Error: ::std::fmt::Display,
         {
             self.value = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for value: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for value: {}", e));
             self
         }
         pub fn voice<T>(mut self, value: T) -> Self
@@ -12368,14 +11852,13 @@ pub mod builder {
         {
             self.voice = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for voice: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for voice: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentPartsItemMeasuresItemOttavasItem>
-    for super::MnxDocumentPartsItemMeasuresItemOttavasItem {
+        for super::MnxDocumentPartsItemMeasuresItemOttavasItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentPartsItemMeasuresItemOttavasItem,
@@ -12391,7 +11874,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentPartsItemMeasuresItemOttavasItem>
-    for MnxDocumentPartsItemMeasuresItemOttavasItem {
+        for MnxDocumentPartsItemMeasuresItemOttavasItem
+    {
         fn from(value: super::MnxDocumentPartsItemMeasuresItemOttavasItem) -> Self {
             Self {
                 end: Ok(value.end),
@@ -12406,18 +11890,12 @@ pub mod builder {
     #[derive(Clone, Debug)]
     pub struct MnxDocumentPartsItemMeasuresItemSequencesItem {
         content: ::std::result::Result<super::SequenceContent, ::std::string::String>,
-        orient: ::std::result::Result<
-            ::std::option::Option<super::Orientation>,
-            ::std::string::String,
-        >,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
-        voice: ::std::result::Result<
-            ::std::option::Option<super::VoiceName>,
-            ::std::string::String,
-        >,
+        orient:
+            ::std::result::Result<::std::option::Option<super::Orientation>, ::std::string::String>,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
+        voice:
+            ::std::result::Result<::std::option::Option<super::VoiceName>, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentPartsItemMeasuresItemSequencesItem {
         fn default() -> Self {
@@ -12437,9 +11915,7 @@ pub mod builder {
         {
             self.content = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for content: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for content: {}", e));
             self
         }
         pub fn orient<T>(mut self, value: T) -> Self
@@ -12449,9 +11925,7 @@ pub mod builder {
         {
             self.orient = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for orient: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for orient: {}", e));
             self
         }
         pub fn staff<T>(mut self, value: T) -> Self
@@ -12461,9 +11935,7 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
         pub fn voice<T>(mut self, value: T) -> Self
@@ -12473,14 +11945,13 @@ pub mod builder {
         {
             self.voice = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for voice: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for voice: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentPartsItemMeasuresItemSequencesItem>
-    for super::MnxDocumentPartsItemMeasuresItemSequencesItem {
+        for super::MnxDocumentPartsItemMeasuresItemSequencesItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentPartsItemMeasuresItemSequencesItem,
@@ -12494,7 +11965,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentPartsItemMeasuresItemSequencesItem>
-    for MnxDocumentPartsItemMeasuresItemSequencesItem {
+        for MnxDocumentPartsItemMeasuresItemSequencesItem
+    {
         fn from(value: super::MnxDocumentPartsItemMeasuresItemSequencesItem) -> Self {
             Self {
                 content: Ok(value.content),
@@ -12506,10 +11978,7 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentScoresItem {
-        layout: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        layout: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
         multimeasure_rests: ::std::result::Result<
             ::std::vec::Vec<super::MnxDocumentScoresItemMultimeasureRestsItem>,
             ::std::string::String,
@@ -12538,9 +12007,7 @@ pub mod builder {
         {
             self.layout = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for layout: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for layout: {}", e));
             self
         }
         pub fn multimeasure_rests<T>(mut self, value: T) -> Self
@@ -12550,13 +12017,12 @@ pub mod builder {
             >,
             T::Error: ::std::fmt::Display,
         {
-            self.multimeasure_rests = value
-                .try_into()
-                .map_err(|e| {
-                    format!(
-                        "error converting supplied value for multimeasure_rests: {}", e
-                    )
-                });
+            self.multimeasure_rests = value.try_into().map_err(|e| {
+                format!(
+                    "error converting supplied value for multimeasure_rests: {}",
+                    e
+                )
+            });
             self
         }
         pub fn name<T>(mut self, value: T) -> Self
@@ -12571,21 +12037,16 @@ pub mod builder {
         }
         pub fn pages<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::vec::Vec<super::MnxDocumentScoresItemPagesItem>,
-            >,
+            T: ::std::convert::TryInto<::std::vec::Vec<super::MnxDocumentScoresItemPagesItem>>,
             T::Error: ::std::fmt::Display,
         {
             self.pages = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for pages: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for pages: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<MnxDocumentScoresItem>
-    for super::MnxDocumentScoresItem {
+    impl ::std::convert::TryFrom<MnxDocumentScoresItem> for super::MnxDocumentScoresItem {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentScoresItem,
@@ -12611,10 +12072,7 @@ pub mod builder {
     #[derive(Clone, Debug)]
     pub struct MnxDocumentScoresItemMultimeasureRestsItem {
         duration: ::std::result::Result<i64, ::std::string::String>,
-        label: ::std::result::Result<
-            ::std::option::Option<super::String>,
-            ::std::string::String,
-        >,
+        label: ::std::result::Result<::std::option::Option<super::String>, ::std::string::String>,
         start: ::std::result::Result<super::MeasureNumber, ::std::string::String>,
     }
     impl ::std::default::Default for MnxDocumentScoresItemMultimeasureRestsItem {
@@ -12634,9 +12092,7 @@ pub mod builder {
         {
             self.duration = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for duration: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for duration: {}", e));
             self
         }
         pub fn label<T>(mut self, value: T) -> Self
@@ -12646,9 +12102,7 @@ pub mod builder {
         {
             self.label = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for label: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for label: {}", e));
             self
         }
         pub fn start<T>(mut self, value: T) -> Self
@@ -12658,14 +12112,13 @@ pub mod builder {
         {
             self.start = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for start: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for start: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentScoresItemMultimeasureRestsItem>
-    for super::MnxDocumentScoresItemMultimeasureRestsItem {
+        for super::MnxDocumentScoresItemMultimeasureRestsItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentScoresItemMultimeasureRestsItem,
@@ -12678,7 +12131,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentScoresItemMultimeasureRestsItem>
-    for MnxDocumentScoresItemMultimeasureRestsItem {
+        for MnxDocumentScoresItemMultimeasureRestsItem
+    {
         fn from(value: super::MnxDocumentScoresItemMultimeasureRestsItem) -> Self {
             Self {
                 duration: Ok(value.duration),
@@ -12689,10 +12143,7 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentScoresItemPagesItem {
-        layout: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        layout: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
         systems: ::std::result::Result<
             ::std::vec::Vec<super::MnxDocumentScoresItemPagesItemSystemsItem>,
             ::std::string::String,
@@ -12714,9 +12165,7 @@ pub mod builder {
         {
             self.layout = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for layout: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for layout: {}", e));
             self
         }
         pub fn systems<T>(mut self, value: T) -> Self
@@ -12728,14 +12177,13 @@ pub mod builder {
         {
             self.systems = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for systems: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for systems: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentScoresItemPagesItem>
-    for super::MnxDocumentScoresItemPagesItem {
+        for super::MnxDocumentScoresItemPagesItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentScoresItemPagesItem,
@@ -12747,7 +12195,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentScoresItemPagesItem>
-    for MnxDocumentScoresItemPagesItem {
+        for MnxDocumentScoresItemPagesItem
+    {
         fn from(value: super::MnxDocumentScoresItemPagesItem) -> Self {
             Self {
                 layout: Ok(value.layout),
@@ -12757,14 +12206,9 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct MnxDocumentScoresItemPagesItemSystemsItem {
-        layout: ::std::result::Result<
-            ::std::option::Option<super::Id>,
-            ::std::string::String,
-        >,
+        layout: ::std::result::Result<::std::option::Option<super::Id>, ::std::string::String>,
         layout_changes: ::std::result::Result<
-            ::std::vec::Vec<
-                super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem,
-            >,
+            ::std::vec::Vec<super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem>,
             ::std::string::String,
         >,
         measure: ::std::result::Result<super::MeasureNumber, ::std::string::String>,
@@ -12786,25 +12230,19 @@ pub mod builder {
         {
             self.layout = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for layout: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for layout: {}", e));
             self
         }
         pub fn layout_changes<T>(mut self, value: T) -> Self
         where
             T: ::std::convert::TryInto<
-                ::std::vec::Vec<
-                    super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem,
-                >,
+                ::std::vec::Vec<super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem>,
             >,
             T::Error: ::std::fmt::Display,
         {
             self.layout_changes = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for layout_changes: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for layout_changes: {}", e));
             self
         }
         pub fn measure<T>(mut self, value: T) -> Self
@@ -12814,14 +12252,13 @@ pub mod builder {
         {
             self.measure = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for measure: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for measure: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<MnxDocumentScoresItemPagesItemSystemsItem>
-    for super::MnxDocumentScoresItemPagesItemSystemsItem {
+        for super::MnxDocumentScoresItemPagesItemSystemsItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentScoresItemPagesItemSystemsItem,
@@ -12834,7 +12271,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::MnxDocumentScoresItemPagesItemSystemsItem>
-    for MnxDocumentScoresItemPagesItemSystemsItem {
+        for MnxDocumentScoresItemPagesItemSystemsItem
+    {
         fn from(value: super::MnxDocumentScoresItemPagesItemSystemsItem) -> Self {
             Self {
                 layout: Ok(value.layout),
@@ -12846,13 +12284,9 @@ pub mod builder {
     #[derive(Clone, Debug)]
     pub struct MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem {
         layout: ::std::result::Result<super::Id, ::std::string::String>,
-        location: ::std::result::Result<
-            super::MeasureRhythmicPosition,
-            ::std::string::String,
-        >,
+        location: ::std::result::Result<super::MeasureRhythmicPosition, ::std::string::String>,
     }
-    impl ::std::default::Default
-    for MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem {
+    impl ::std::default::Default for MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem {
         fn default() -> Self {
             Self {
                 layout: Err("no value supplied for layout".to_string()),
@@ -12868,9 +12302,7 @@ pub mod builder {
         {
             self.layout = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for layout: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for layout: {}", e));
             self
         }
         pub fn location<T>(mut self, value: T) -> Self
@@ -12880,15 +12312,13 @@ pub mod builder {
         {
             self.location = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for location: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for location: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<
-        MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem,
-    > for super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem {
+    impl ::std::convert::TryFrom<MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem>
+        for super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem,
@@ -12899,12 +12329,10 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<
-        super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem,
-    > for MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem {
-        fn from(
-            value: super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem,
-        ) -> Self {
+    impl ::std::convert::From<super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem>
+        for MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem
+    {
+        fn from(value: super::MnxDocumentScoresItemPagesItemSystemsItemLayoutChangesItem) -> Self {
             Self {
                 layout: Ok(value.layout),
                 location: Ok(value.location),
@@ -12989,9 +12417,7 @@ pub mod builder {
         {
             self.duration = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for duration: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for duration: {}", e));
             self
         }
         pub fn multiple<T>(mut self, value: T) -> Self
@@ -13001,9 +12427,7 @@ pub mod builder {
         {
             self.multiple = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for multiple: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for multiple: {}", e));
             self
         }
     }
@@ -13050,9 +12474,7 @@ pub mod builder {
         {
             self.fraction = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for fraction: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for fraction: {}", e));
             self
         }
         pub fn grace_index<T>(mut self, value: T) -> Self
@@ -13062,9 +12484,7 @@ pub mod builder {
         {
             self.grace_index = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for grace_index: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for grace_index: {}", e));
             self
         }
     }
@@ -13089,10 +12509,8 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct SequenceContentItem {
-        subtype_0: ::std::result::Result<
-            ::std::option::Option<super::Event>,
-            ::std::string::String,
-        >,
+        subtype_0:
+            ::std::result::Result<::std::option::Option<super::Event>, ::std::string::String>,
         subtype_1: ::std::result::Result<
             ::std::option::Option<super::SequenceContentItemSubtype1>,
             ::std::string::String,
@@ -13124,51 +12542,37 @@ pub mod builder {
         {
             self.subtype_0 = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for subtype_0: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for subtype_0: {}", e));
             self
         }
         pub fn subtype_1<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::SequenceContentItemSubtype1>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::SequenceContentItemSubtype1>>,
             T::Error: ::std::fmt::Display,
         {
             self.subtype_1 = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for subtype_1: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for subtype_1: {}", e));
             self
         }
         pub fn subtype_2<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::SequenceContentItemSubtype2>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::SequenceContentItemSubtype2>>,
             T::Error: ::std::fmt::Display,
         {
             self.subtype_2 = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for subtype_2: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for subtype_2: {}", e));
             self
         }
         pub fn subtype_3<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::SequenceContentItemSubtype3>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::SequenceContentItemSubtype3>>,
             T::Error: ::std::fmt::Display,
         {
             self.subtype_3 = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for subtype_3: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for subtype_3: {}", e));
             self
         }
     }
@@ -13197,18 +12601,10 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct SequenceContentItemSubtype1 {
-        class: ::std::result::Result<
-            ::std::option::Option<super::StyleClass>,
-            ::std::string::String,
-        >,
-        color: ::std::result::Result<
-            ::std::option::Option<super::Color>,
-            ::std::string::String,
-        >,
-        content: ::std::result::Result<
-            ::std::vec::Vec<super::Event>,
-            ::std::string::String,
-        >,
+        class:
+            ::std::result::Result<::std::option::Option<super::StyleClass>, ::std::string::String>,
+        color: ::std::result::Result<::std::option::Option<super::Color>, ::std::string::String>,
+        content: ::std::result::Result<::std::vec::Vec<super::Event>, ::std::string::String>,
         grace_type: ::std::result::Result<
             ::std::option::Option<super::SequenceContentItemSubtype1GraceType>,
             ::std::string::String,
@@ -13236,9 +12632,7 @@ pub mod builder {
         {
             self.class = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for class: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for class: {}", e));
             self
         }
         pub fn color<T>(mut self, value: T) -> Self
@@ -13248,9 +12642,7 @@ pub mod builder {
         {
             self.color = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for color: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for color: {}", e));
             self
         }
         pub fn content<T>(mut self, value: T) -> Self
@@ -13260,9 +12652,7 @@ pub mod builder {
         {
             self.content = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for content: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for content: {}", e));
             self
         }
         pub fn grace_type<T>(mut self, value: T) -> Self
@@ -13274,9 +12664,7 @@ pub mod builder {
         {
             self.grace_type = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for grace_type: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for grace_type: {}", e));
             self
         }
         pub fn slash<T>(mut self, value: T) -> Self
@@ -13286,9 +12674,7 @@ pub mod builder {
         {
             self.slash = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for slash: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for slash: {}", e));
             self
         }
         pub fn type_<T>(mut self, value: T) -> Self
@@ -13298,14 +12684,11 @@ pub mod builder {
         {
             self.type_ = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for type_: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for type_: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<SequenceContentItemSubtype1>
-    for super::SequenceContentItemSubtype1 {
+    impl ::std::convert::TryFrom<SequenceContentItemSubtype1> for super::SequenceContentItemSubtype1 {
         type Error = super::error::ConversionError;
         fn try_from(
             value: SequenceContentItemSubtype1,
@@ -13320,8 +12703,7 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<super::SequenceContentItemSubtype1>
-    for SequenceContentItemSubtype1 {
+    impl ::std::convert::From<super::SequenceContentItemSubtype1> for SequenceContentItemSubtype1 {
         fn from(value: super::SequenceContentItemSubtype1) -> Self {
             Self {
                 class: Ok(value.class),
@@ -13341,10 +12723,8 @@ pub mod builder {
         >,
         content: ::std::result::Result<super::SequenceContent, ::std::string::String>,
         inner: ::std::result::Result<super::NoteValueQuantity, ::std::string::String>,
-        orient: ::std::result::Result<
-            ::std::option::Option<super::Orientation>,
-            ::std::string::String,
-        >,
+        orient:
+            ::std::result::Result<::std::option::Option<super::Orientation>, ::std::string::String>,
         outer: ::std::result::Result<super::NoteValueQuantity, ::std::string::String>,
         show_number: ::std::result::Result<
             ::std::option::Option<super::TupletDisplaySetting>,
@@ -13354,10 +12734,8 @@ pub mod builder {
             ::std::option::Option<super::TupletDisplaySetting>,
             ::std::string::String,
         >,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
         type_: ::std::result::Result<::std::string::String, ::std::string::String>,
     }
     impl ::std::default::Default for SequenceContentItemSubtype2 {
@@ -13385,9 +12763,7 @@ pub mod builder {
         {
             self.bracket = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for bracket: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for bracket: {}", e));
             self
         }
         pub fn content<T>(mut self, value: T) -> Self
@@ -13397,9 +12773,7 @@ pub mod builder {
         {
             self.content = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for content: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for content: {}", e));
             self
         }
         pub fn inner<T>(mut self, value: T) -> Self
@@ -13409,9 +12783,7 @@ pub mod builder {
         {
             self.inner = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for inner: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for inner: {}", e));
             self
         }
         pub fn orient<T>(mut self, value: T) -> Self
@@ -13421,9 +12793,7 @@ pub mod builder {
         {
             self.orient = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for orient: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for orient: {}", e));
             self
         }
         pub fn outer<T>(mut self, value: T) -> Self
@@ -13433,37 +12803,27 @@ pub mod builder {
         {
             self.outer = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for outer: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for outer: {}", e));
             self
         }
         pub fn show_number<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::TupletDisplaySetting>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::TupletDisplaySetting>>,
             T::Error: ::std::fmt::Display,
         {
             self.show_number = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for show_number: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for show_number: {}", e));
             self
         }
         pub fn show_value<T>(mut self, value: T) -> Self
         where
-            T: ::std::convert::TryInto<
-                ::std::option::Option<super::TupletDisplaySetting>,
-            >,
+            T: ::std::convert::TryInto<::std::option::Option<super::TupletDisplaySetting>>,
             T::Error: ::std::fmt::Display,
         {
             self.show_value = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for show_value: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for show_value: {}", e));
             self
         }
         pub fn staff<T>(mut self, value: T) -> Self
@@ -13473,9 +12833,7 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
         pub fn type_<T>(mut self, value: T) -> Self
@@ -13485,14 +12843,11 @@ pub mod builder {
         {
             self.type_ = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for type_: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for type_: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<SequenceContentItemSubtype2>
-    for super::SequenceContentItemSubtype2 {
+    impl ::std::convert::TryFrom<SequenceContentItemSubtype2> for super::SequenceContentItemSubtype2 {
         type Error = super::error::ConversionError;
         fn try_from(
             value: SequenceContentItemSubtype2,
@@ -13510,8 +12865,7 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<super::SequenceContentItemSubtype2>
-    for SequenceContentItemSubtype2 {
+    impl ::std::convert::From<super::SequenceContentItemSubtype2> for SequenceContentItemSubtype2 {
         fn from(value: super::SequenceContentItemSubtype2) -> Self {
             Self {
                 bracket: Ok(value.bracket),
@@ -13547,9 +12901,7 @@ pub mod builder {
         {
             self.duration = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for duration: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for duration: {}", e));
             self
         }
         pub fn type_<T>(mut self, value: T) -> Self
@@ -13559,14 +12911,11 @@ pub mod builder {
         {
             self.type_ = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for type_: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for type_: {}", e));
             self
         }
     }
-    impl ::std::convert::TryFrom<SequenceContentItemSubtype3>
-    for super::SequenceContentItemSubtype3 {
+    impl ::std::convert::TryFrom<SequenceContentItemSubtype3> for super::SequenceContentItemSubtype3 {
         type Error = super::error::ConversionError;
         fn try_from(
             value: SequenceContentItemSubtype3,
@@ -13577,8 +12926,7 @@ pub mod builder {
             })
         }
     }
-    impl ::std::convert::From<super::SequenceContentItemSubtype3>
-    for SequenceContentItemSubtype3 {
+    impl ::std::convert::From<super::SequenceContentItemSubtype3> for SequenceContentItemSubtype3 {
         fn from(value: super::SequenceContentItemSubtype3) -> Self {
             Self {
                 duration: Ok(value.duration),
@@ -13588,27 +12936,21 @@ pub mod builder {
     }
     #[derive(Clone, Debug)]
     pub struct SystemLayoutContentItemSourcesItem {
-        label: ::std::result::Result<
-            ::std::option::Option<super::StaffLabel>,
-            ::std::string::String,
-        >,
+        label:
+            ::std::result::Result<::std::option::Option<super::StaffLabel>, ::std::string::String>,
         labelref: ::std::result::Result<
             ::std::option::Option<super::StaffLabelref>,
             ::std::string::String,
         >,
         part: ::std::result::Result<super::Id, ::std::string::String>,
-        staff: ::std::result::Result<
-            ::std::option::Option<super::StaffNumber>,
-            ::std::string::String,
-        >,
+        staff:
+            ::std::result::Result<::std::option::Option<super::StaffNumber>, ::std::string::String>,
         stem: ::std::result::Result<
             ::std::option::Option<super::StemDirection>,
             ::std::string::String,
         >,
-        voice: ::std::result::Result<
-            ::std::option::Option<super::VoiceName>,
-            ::std::string::String,
-        >,
+        voice:
+            ::std::result::Result<::std::option::Option<super::VoiceName>, ::std::string::String>,
     }
     impl ::std::default::Default for SystemLayoutContentItemSourcesItem {
         fn default() -> Self {
@@ -13630,9 +12972,7 @@ pub mod builder {
         {
             self.label = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for label: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for label: {}", e));
             self
         }
         pub fn labelref<T>(mut self, value: T) -> Self
@@ -13642,9 +12982,7 @@ pub mod builder {
         {
             self.labelref = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for labelref: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for labelref: {}", e));
             self
         }
         pub fn part<T>(mut self, value: T) -> Self
@@ -13664,9 +13002,7 @@ pub mod builder {
         {
             self.staff = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for staff: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for staff: {}", e));
             self
         }
         pub fn stem<T>(mut self, value: T) -> Self
@@ -13686,14 +13022,13 @@ pub mod builder {
         {
             self.voice = value
                 .try_into()
-                .map_err(|e| {
-                    format!("error converting supplied value for voice: {}", e)
-                });
+                .map_err(|e| format!("error converting supplied value for voice: {}", e));
             self
         }
     }
     impl ::std::convert::TryFrom<SystemLayoutContentItemSourcesItem>
-    for super::SystemLayoutContentItemSourcesItem {
+        for super::SystemLayoutContentItemSourcesItem
+    {
         type Error = super::error::ConversionError;
         fn try_from(
             value: SystemLayoutContentItemSourcesItem,
@@ -13709,7 +13044,8 @@ pub mod builder {
         }
     }
     impl ::std::convert::From<super::SystemLayoutContentItemSourcesItem>
-    for SystemLayoutContentItemSourcesItem {
+        for SystemLayoutContentItemSourcesItem
+    {
         fn from(value: super::SystemLayoutContentItemSourcesItem) -> Self {
             Self {
                 label: Ok(value.label),
